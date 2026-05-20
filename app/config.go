@@ -63,8 +63,8 @@ var mbasics = module.NewBasicManager(
 		feegrantmodule.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 	},
-		// akash
-		akashModuleBasics()...,
+		// dicompute
+		dicomputeModuleBasics()...,
 	)...,
 )
 

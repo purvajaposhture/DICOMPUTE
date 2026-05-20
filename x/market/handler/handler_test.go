@@ -956,7 +956,7 @@ func TestCreateBidNonExistingOrder(t *testing.T) {
 
 	msg := &mvbeta.MsgCreateBid{
 		ID:    mv1.MakeBidID(orderID, providerAddr),
-		Price: testutil.AkashDecCoinRandom(t),
+		Price: testutil.DICOMPUTEDecCoinRandom(t),
 	}
 
 	res, err := suite.handler(suite.Context(), msg)

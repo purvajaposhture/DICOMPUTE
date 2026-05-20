@@ -41,9 +41,9 @@ Examples include:
 	- Setting module initial params
 	- Setting denom metadata
 Example:
-	akash prepare-genesis mainnet akash-1
+	dicompute prepare-genesis mainnet dicompute-1
 	- Check input genesis:
-		file is at ~/.akash/config/genesis.json
+		file is at ~/.dicompute/config/genesis.json
 `,
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -223,7 +223,7 @@ func MainnetGenesisParams() GenesisParams {
 
 	genParams.NativeCoinMetadatas = []banktypes.Metadata{
 		{
-			Description: "The native token of Akash",
+			Description: "The native token of DICOMPUTE",
 			DenomUnits: []*banktypes.DenomUnit{
 				{
 					Denom:    sdkutil.DenomUakt,
@@ -238,11 +238,11 @@ func MainnetGenesisParams() GenesisParams {
 			},
 			Base:    sdkutil.DenomUakt,
 			Display: sdkutil.DenomAkt,
-			Name:    "Akash Native Token",
+			Name:    "DICOMPUTE Native Token",
 			Symbol:  "AKT",
 		},
 		{
-			Description: "Akash Compute Token",
+			Description: "DICOMPUTE Compute Token",
 			DenomUnits: []*banktypes.DenomUnit{
 				{
 					Denom:    sdkutil.DenomAct,
@@ -259,7 +259,7 @@ func MainnetGenesisParams() GenesisParams {
 			},
 			Base:    sdkutil.DenomUact,
 			Display: sdkutil.DenomUact,
-			Name:    "Akash Compute Token",
+			Name:    "DICOMPUTE Compute Token",
 			Symbol:  "ACT",
 		},
 	}

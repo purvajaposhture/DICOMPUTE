@@ -100,12 +100,12 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *r
 
 // GetQueryCmd get the root query command of this module
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	panic("akash modules do not export cli commands via cosmos interface")
+	panic("dicompute modules do not export cli commands via cosmos interface")
 }
 
 // GetTxCmd get the root tx command of this module
 func (AppModuleBasic) GetTxCmd() *cobra.Command {
-	panic("akash modules do not export cli commands via cosmos interface")
+	panic("dicompute modules do not export cli commands via cosmos interface")
 }
 
 // NewAppModule creates a new AppModule Object

@@ -91,14 +91,14 @@ func (t *TestnetVotingPeriod) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// InitAkashAppForTestnet is broken down into two sections:
+// InitDICOMPUTEAppForTestnet is broken down into two sections:
 // Required Changes: Changes that, if not made, will cause the testnet to halt or panic
 // Optional Changes: Changes to customize the testnet to one's liking (lower vote times, fund accounts, etc)
-func InitAkashAppForTestnet(
-	app *AkashApp,
+func InitDICOMPUTEAppForTestnet(
+	app *DICOMPUTEApp,
 	db dbm.DB,
 	tcfg *TestnetConfig,
-) *AkashApp {
+) *DICOMPUTEApp {
 	//
 	// Required Changes:
 	//
@@ -159,7 +159,7 @@ func InitAkashAppForTestnet(
 	// BANK
 	//
 
-	// Fund localakash accounts
+	// Fund localdicompute accounts
 	for _, account := range tcfg.Accounts {
 		err := app.Keepers.Cosmos.Bank.MintCoins(ctx, minttypes.ModuleName, account.Balances)
 		if err != nil {
@@ -176,7 +176,7 @@ func InitAkashAppForTestnet(
 		if err != nil {
 			panic(err.Error())
 		}
-		bech32Addr, err := bech32.ConvertAndEncode("akashvaloper", bz)
+		bech32Addr, err := bech32.ConvertAndEncode("dicomputevaloper", bz)
 		if err != nil {
 			panic(err.Error())
 		}

@@ -17,7 +17,7 @@ type msgServer struct {
 	keeper keeper.Keeper
 }
 
-// NewMsgServerImpl returns an implementation of the akash staking MsgServer interface
+// NewMsgServerImpl returns an implementation of the dicompute staking MsgServer interface
 // for the provided Keeper.
 func NewMsgServerImpl(k keeper.Keeper) types.MsgServer {
 	return &msgServer{

@@ -39,7 +39,7 @@ import (
 
 	cflags "pkg.akt.dev/go/cli/flags"
 
-	akash "pkg.akt.dev/node/v2/app"
+	dicompute "pkg.akt.dev/node/v2/app"
 	"pkg.akt.dev/node/v2/util/server"
 )
 
@@ -348,10 +348,10 @@ func testnetify(sctx *sdksrv.Context, tcfg TestnetConfig, testnetAppCreator type
 		return nil, err
 	}
 
-	appConfig := &akash.TestnetConfig{
+	appConfig := &dicompute.TestnetConfig{
 		Accounts:   tcfg.Accounts,
 		Gov:        tcfg.Gov,
-		Validators: make([]akash.TestnetValidator, 0, len(tcfg.Validators)),
+		Validators: make([]dicompute.TestnetValidator, 0, len(tcfg.Validators)),
 		Upgrade:    tcfg.upgrade,
 	}
 
@@ -386,7 +386,7 @@ func testnetify(sctx *sdksrv.Context, tcfg TestnetConfig, testnetAppCreator type
 			return nil, err
 		}
 
-		appConfig.Validators = append(appConfig.Validators, akash.TestnetValidator{
+		appConfig.Validators = append(appConfig.Validators, dicompute.TestnetValidator{
 			OperatorAddress:   val.Operator,
 			ConsensusAddress:  pubKey.Address().Bytes(),
 			ConsensusPubKey:   consensusPubkey,

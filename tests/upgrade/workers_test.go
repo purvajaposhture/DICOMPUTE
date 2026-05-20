@@ -32,7 +32,7 @@ import (
 	mvbeta "pkg.akt.dev/go/node/market/v1beta5"
 	"pkg.akt.dev/go/sdkutil"
 
-	akash "pkg.akt.dev/node/v2/app"
+	dicompute "pkg.akt.dev/node/v2/app"
 	uttypes "pkg.akt.dev/node/v2/tests/upgrade/types"
 )
 
@@ -48,7 +48,7 @@ var _ uttypes.TestWorker = (*postUpgrade)(nil)
 
 func (pu *postUpgrade) Run(ctx context.Context, t *testing.T, params uttypes.TestParams) {
 	encCfg := sdkutil.MakeEncodingConfig()
-	akash.ModuleBasics().RegisterInterfaces(encCfg.InterfaceRegistry)
+	dicompute.ModuleBasics().RegisterInterfaces(encCfg.InterfaceRegistry)
 	rpcClient, err := arpcclient.NewClient(ctx, params.Node)
 	require.NoError(t, err)
 

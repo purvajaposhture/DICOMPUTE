@@ -35,7 +35,7 @@ func UpgradeInfoFromTag(ctx context.Context, tag string, pretty bool) (string, e
 
 	gh := github.NewClient(tc)
 
-	rel, resp, err := gh.Repositories.GetReleaseByTag(ctx, "akash-network", "node", tag)
+	rel, resp, err := gh.Repositories.GetReleaseByTag(ctx, "dicompute-network", "node", tag)
 	if err != nil {
 		return "", err
 	}
@@ -45,7 +45,7 @@ func UpgradeInfoFromTag(ctx context.Context, tag string, pretty bool) (string, e
 	}
 
 	sTag := strings.TrimPrefix(tag, "v")
-	checksumsAsset := fmt.Sprintf("akash_%s_checksums.txt", sTag)
+	checksumsAsset := fmt.Sprintf("dicompute_%s_checksums.txt", sTag)
 	var checksumsID int64
 	for _, asset := range rel.Assets {
 		if asset.GetName() == checksumsAsset {
@@ -53,7 +53,7 @@ func UpgradeInfoFromTag(ctx context.Context, tag string, pretty bool) (string, e
 		}
 	}
 
-	body, _, err := gh.Repositories.DownloadReleaseAsset(ctx, "akash-network", "node", checksumsID, http.DefaultClient)
+	body, _, err := gh.Repositories.DownloadReleaseAsset(ctx, "dicompute-network", "node", checksumsID, http.DefaultClient)
 	if err != nil {
 		return "", err
 	}
@@ -65,7 +65,7 @@ func UpgradeInfoFromTag(ctx context.Context, tag string, pretty bool) (string, e
 		Binaries: make(map[string]string),
 	}
 
-	urlBase := fmt.Sprintf("https://github.com/akash-network/node/releases/download/%s", tag)
+	urlBase := fmt.Sprintf("https://github.com/dicompute-network/node/releases/download/%s", tag)
 	scanner := bufio.NewScanner(body)
 	for scanner.Scan() {
 		tuple := strings.Split(scanner.Text(), "  ")
@@ -76,11 +76,11 @@ func UpgradeInfoFromTag(ctx context.Context, tag string, pretty bool) (string, e
 		link := fmt.Sprintf("%s/%s?checksum=sha256:%s", urlBase, tuple[1], tuple[0])
 
 		switch tuple[1] {
-		case "akash_linux_amd64.zip":
+		case "dicompute_linux_amd64.zip":
 			info.Binaries["linux/amd64"] = link
-		case "akash_linux_arm64.zip":
+		case "dicompute_linux_arm64.zip":
 			info.Binaries["linux/arm64"] = link
-		case "akash_darwin_all.zip":
+		case "dicompute_darwin_all.zip":
 			info.Binaries["darwin/amd64"] = link
 			info.Binaries["darwin/arm64"] = link
 		}

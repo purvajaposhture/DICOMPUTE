@@ -1,7 +1,7 @@
-# Docker Compose for Akash Local Development with Pyth Oracle
+# Docker Compose for DICOMPUTE Local Development with Pyth Oracle
 #
 # This setup includes:
-#   - akash-node: Single-node validator with Wormhole and Pyth contracts
+#   - dicompute-node: Single-node validator with Wormhole and Pyth contracts
 #   - hermes-client: Price relayer that submits Pyth prices to the oracle
 #
 # Prerequisites:
@@ -26,7 +26,7 @@ services:
   # Hermes Price Relayer
   # =============================================================================
   hermes-client:
-    image: ghcr.io/akash-network/hermes:latest
+    image: ghcr.io/dicompute-network/hermes:latest
     container_name: hermes-client
     hostname: hermes-client
     network_mode: "host"

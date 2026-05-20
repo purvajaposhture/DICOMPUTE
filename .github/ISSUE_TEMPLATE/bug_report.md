@@ -1,5 +1,5 @@
-This is the requirements for reporting a bug on the Akash project. If you need general
-help, please make a post on [our Discourse](https://forum.akash.network).
+This is the requirements for reporting a bug on the DICOMPUTE project. If you need general
+help, please make a post on [our Discourse](https://forum.dicompute.network).
 
 Please provide as much information as possible. Please do not post screenshots of terminal
 sessions. Instead, copy & paste the terminal session text into the report
@@ -29,9 +29,9 @@ Please include blockchain details if it applies, this section is not require
 
 # Operation system & environment
 
-# Akash version
+# DICOMPUTE version
 
-Please paste the output of the `akash version` command here. If you built from source,
+Please paste the output of the `dicompute version` command here. If you built from source,
 please include the branch & the commit SHA you compiled from.
 
 # Other information

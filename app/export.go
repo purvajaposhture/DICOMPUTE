@@ -27,7 +27,7 @@ import (
 
 // ExportAppStateAndValidators exports the state of the application for a genesis
 // file.
-func (app *AkashApp) ExportAppStateAndValidators(
+func (app *DICOMPUTEApp) ExportAppStateAndValidators(
 	forZeroHeight bool,
 	jailAllowedAddrs []string,
 	modulesToExport []string,
@@ -71,7 +71,7 @@ func (app *AkashApp) ExportAppStateAndValidators(
 // NOTE zero height genesis is a temporary feature that will be deprecated
 //
 //	in favour of export at a block height
-func (app *AkashApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []string) {
+func (app *DICOMPUTEApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []string) {
 	// Check if there is an allowed address list
 	applyAllowedAddrs := len(jailAllowedAddrs) > 0
 
@@ -278,13 +278,13 @@ func (app *AkashApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs 
 	}
 }
 
-// Setup initializes a new AkashApp. A Nop logger is set in AkashApp.
-func Setup(opts ...SetupAppOption) *AkashApp {
+// Setup initializes a new DICOMPUTEApp. A Nop logger is set in DICOMPUTEApp.
+func Setup(opts ...SetupAppOption) *DICOMPUTEApp {
 	cfg := &setupAppOptions{
 		encCfg:  sdkutil.MakeEncodingConfig(),
 		home:    DefaultHome,
 		checkTx: false,
-		chainID: "akash-1",
+		chainID: "dicompute-1",
 	}
 
 	ModuleBasics().RegisterInterfaces(cfg.encCfg.InterfaceRegistry)

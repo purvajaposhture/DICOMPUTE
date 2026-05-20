@@ -50,7 +50,7 @@ import (
 	ptypes "pkg.akt.dev/go/node/provider/v1beta4"
 	"pkg.akt.dev/go/sdkutil"
 
-	akash "pkg.akt.dev/node/v2/app"
+	dicompute "pkg.akt.dev/node/v2/app"
 	"pkg.akt.dev/node/v2/app/sim"
 	simtestutil "pkg.akt.dev/node/v2/testutil/sims"
 	dkeys "pkg.akt.dev/node/v2/x/deployment/keeper/keys"
@@ -58,7 +58,7 @@ import (
 
 // AppChainID hardcoded chainID for simulation
 const (
-	AppChainID = "akash-sim"
+	AppChainID = "dicompute-sim"
 )
 
 type storeKeyGetter interface {
@@ -88,12 +88,12 @@ func interBlockCacheOpt() func(*baseapp.BaseApp) {
 	return baseapp.SetInterBlockCache(store.NewCommitKVStoreCacheManager())
 }
 
-func simulateFromSeedFunc(t *testing.T, newApp *akash.AkashApp, config sdksim.Config) (bool, simulation.Params, error) {
+func simulateFromSeedFunc(t *testing.T, newApp *dicompute.DICOMPUTEApp, config sdksim.Config) (bool, simulation.Params, error) {
 	return simulation.SimulateFromSeed(
 		t,
 		os.Stdout,
 		newApp.BaseApp,
-		simtestutil.AppStateFn(newApp.AppCodec(), newApp.SimulationManager(), akash.NewDefaultGenesisState(newApp.AppCodec())),
+		simtestutil.AppStateFn(newApp.AppCodec(), newApp.SimulationManager(), dicompute.NewDefaultGenesisState(newApp.AppCodec())),
 		sdksim.RandomAccounts, // Replace it with own random account function if using keys other than secp256k1
 		simtestutil.BuildSimulationOperations(newApp, newApp.AppCodec(), config, newApp.TxConfig()),
 		newApp.ModuleAccountAddrs(),
@@ -112,7 +112,7 @@ func TestFullAppSimulation(t *testing.T) {
 
 	encodingConfig := sdkutil.MakeEncodingConfig()
 
-	akash.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	dicompute.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	defer func() {
 		_ = db.Close()
@@ -120,16 +120,16 @@ func TestFullAppSimulation(t *testing.T) {
 	}()
 
 	appOpts := viper.New()
-	appOpts.Set("home", akash.DefaultHome)
+	appOpts.Set("home", dicompute.DefaultHome)
 
 	r := rand.New(rand.NewSource(config.Seed)) // nolint: gosec
 	genTime := sdksim.RandTimestamp(r)
 
 	appOpts.Set("GenesisTime", genTime)
 
-	app1 := akash.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
+	app1 := dicompute.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
 
-	require.Equal(t, "akash", app1.Name())
+	require.Equal(t, "dicompute", app1.Name())
 
 	fmt.Printf("config--------\n%v", config)
 	// run randomized simulation
@@ -150,7 +150,7 @@ func TestAppImportExport(t *testing.T) {
 
 	// Run randomized simulation
 	_, simParams, simErr := simulateFromSeedFunc(t, appA, config)
-	require.Equal(t, akash.AppName, appA.Name())
+	require.Equal(t, dicompute.AppName, appA.Name())
 
 	// export state and simParams before the simulation error is checked
 	err := simtestutil.CheckExportSimulation(appA, config, simParams)
@@ -179,8 +179,8 @@ func TestAppImportExport(t *testing.T) {
 	}()
 
 	appOpts[cflags.FlagHome] = t.TempDir() // ensure a unique folder for the new app
-	appB := akash.NewApp(logger, newDB, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
-	require.Equal(t, akash.AppName, appB.Name())
+	appB := dicompute.NewApp(logger, newDB, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
+	require.Equal(t, dicompute.AppName, appB.Name())
 
 	ctxA := appA.NewContextLegacy(true, cmtproto.Header{Height: appA.LastBlockHeight()})
 	ctxB := appB.NewContextLegacy(true, cmtproto.Header{Height: appA.LastBlockHeight()})
@@ -392,7 +392,7 @@ func TestAppSimulationAfterImport(t *testing.T) {
 	}()
 
 	encodingConfig := sdkutil.MakeEncodingConfig()
-	akash.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	dicompute.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	appOpts := viper.New()
 	appOpts.Set("home", t.TempDir()) // ensure a unique folder per run
@@ -402,8 +402,8 @@ func TestAppSimulationAfterImport(t *testing.T) {
 
 	appOpts.Set("GenesisTime", genTime)
 
-	app := akash.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
-	require.Equal(t, akash.AppName, app.Name())
+	app := dicompute.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
+	require.Equal(t, dicompute.AppName, app.Name())
 
 	// Run randomized simulation
 	stopEarly, simParams, simErr := simulateFromSeedFunc(t, app, config)
@@ -438,8 +438,8 @@ func TestAppSimulationAfterImport(t *testing.T) {
 	}()
 
 	appOpts.Set("home", t.TempDir()) // ensure a unique folder per run
-	newApp := akash.NewApp(log.NewNopLogger(), newDB, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
-	require.Equal(t, akash.AppName, newApp.Name())
+	newApp := dicompute.NewApp(log.NewNopLogger(), newDB, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
+	require.Equal(t, dicompute.AppName, newApp.Name())
 
 	_, err = newApp.InitChain(&abci.RequestInitChain{
 		AppStateBytes: exported.AppState,
@@ -457,7 +457,7 @@ func TestAppStateDeterminism(t *testing.T) {
 	}
 
 	encodingConfig := sdkutil.MakeEncodingConfig()
-	akash.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	dicompute.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	config := sim.NewConfigFromFlags()
 	config.InitialBlockHeight = 1
@@ -490,7 +490,7 @@ func TestAppStateDeterminism(t *testing.T) {
 
 			appOpts.Set("GenesisTime", genTime)
 
-			app := akash.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, interBlockCacheOpt(), baseapp.SetChainID(AppChainID))
+			app := dicompute.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, interBlockCacheOpt(), baseapp.SetChainID(AppChainID))
 
 			fmt.Printf(
 				"running non-determinism simulation; seed %d: %d/%d, attempt: %d/%d\n",
@@ -518,13 +518,13 @@ func TestAppStateDeterminism(t *testing.T) {
 	}
 }
 
-func setupSimulationApp(t *testing.T, msg string) (sdksim.Config, sdkutil.EncodingConfig, dbm.DB, simtestutil.AppOptionsMap, log.Logger, *akash.AkashApp) {
+func setupSimulationApp(t *testing.T, msg string) (sdksim.Config, sdkutil.EncodingConfig, dbm.DB, simtestutil.AppOptionsMap, log.Logger, *dicompute.DICOMPUTEApp) {
 	config := sim.NewConfigFromFlags()
 	config.ChainID = AppChainID
 
 	encodingConfig := sdkutil.MakeEncodingConfig()
 
-	akash.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	dicompute.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	db, dir, logger, skip, err := simtestutil.SetupSimulation(config, "leveldb-app-sim", "Simulation", sim.FlagVerboseValue, sim.FlagEnabledValue)
 	if skip {
@@ -540,8 +540,8 @@ func setupSimulationApp(t *testing.T, msg string) (sdksim.Config, sdkutil.Encodi
 	appOpts := make(simtestutil.AppOptionsMap)
 	appOpts[cflags.FlagHome] = dir // ensure a unique folder
 	appOpts[cflags.FlagInvCheckPeriod] = sim.FlagPeriodValue
-	app := akash.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
+	app := dicompute.NewApp(logger, db, nil, true, sim.FlagPeriodValue, map[int64]bool{}, encodingConfig, appOpts, fauxMerkleModeOpt, baseapp.SetChainID(AppChainID))
 
-	require.Equal(t, akash.AppName, app.Name())
+	require.Equal(t, dicompute.AppName, app.Name())
 	return config, encodingConfig, db, appOpts, logger, app
 }

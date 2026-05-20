@@ -25,7 +25,7 @@ import (
 	aclient "pkg.akt.dev/go/node/client"
 	"pkg.akt.dev/go/sdkutil"
 
-	akash "pkg.akt.dev/node/v2/app"
+	dicompute "pkg.akt.dev/node/v2/app"
 )
 
 type appCreator struct {
@@ -85,8 +85,8 @@ func (a appCreator) newApp(
 	)
 
 	// Configure version discovery registry with chain metadata.
-	// This is used by the CometBFT JSON-RPC "akash" route (automatic via init())
-	// and the gRPC Discovery service (registered in AkashApp.RegisterGRPCServerWithSkipCheckHeader).
+	// This is used by the CometBFT JSON-RPC "dicompute" route (automatic via init())
+	// and the gRPC Discovery service (registered in DICOMPUTEApp.RegisterGRPCServerWithSkipCheckHeader).
 	aclient.SetRegistry(aclient.DefaultRegistry(
 		aclient.WithChainID(chainID),
 		aclient.WithNodeVersion(version.Version),
@@ -106,7 +106,7 @@ func (a appCreator) newApp(
 		baseapp.SetIAVLCacheSize(cast.ToInt(appOpts.Get(cflags.FlagIAVLCacheSize))),
 	}
 
-	return akash.NewApp(
+	return dicompute.NewApp(
 		logger, db, traceStore, true, cast.ToUint(appOpts.Get(cflags.FlagInvCheckPeriod)), skipUpgradeHeights,
 		a.encCfg,
 		appOpts,
@@ -124,7 +124,7 @@ func (a appCreator) appExport(
 	appOpts servertypes.AppOptions,
 	modulesToExport []string,
 ) (servertypes.ExportedApp, error) {
-	var akashApp *akash.AkashApp
+	var dicomputeApp *dicompute.DICOMPUTEApp
 
 	homePath, ok := appOpts.Get(cflags.FlagHome).(string)
 	if !ok || homePath == "" {
@@ -139,33 +139,33 @@ func (a appCreator) appExport(
 	appOpts = viperAppOpts
 
 	if height != -1 {
-		akashApp = akash.NewApp(logger, db, tio, false, uint(1), map[int64]bool{}, a.encCfg, appOpts)
+		dicomputeApp = dicompute.NewApp(logger, db, tio, false, uint(1), map[int64]bool{}, a.encCfg, appOpts)
 
-		if err := akashApp.LoadHeight(height); err != nil {
+		if err := dicomputeApp.LoadHeight(height); err != nil {
 			return servertypes.ExportedApp{}, err
 		}
 	} else {
-		akashApp = akash.NewApp(logger, db, tio, true, uint(1), map[int64]bool{}, a.encCfg, appOpts)
+		dicomputeApp = dicompute.NewApp(logger, db, tio, true, uint(1), map[int64]bool{}, a.encCfg, appOpts)
 	}
 
-	return akashApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs, modulesToExport)
+	return dicomputeApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs, modulesToExport)
 }
 
 // newTestnetApp starts by running the normal newApp method. From there, the app interface returned is modified in order
 // for a testnet to be created from the provided app.
 func (a appCreator) newTestnetApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts servertypes.AppOptions) servertypes.Application {
-	// Create an app and type cast to an AkashApp
+	// Create an app and type cast to an DICOMPUTEApp
 	app := a.newApp(logger, db, traceStore, appOpts)
-	akashApp, ok := app.(*akash.AkashApp)
+	dicomputeApp, ok := app.(*dicompute.DICOMPUTEApp)
 	if !ok {
-		panic("app created from newApp is not of type AkashApp")
+		panic("app created from newApp is not of type DICOMPUTEApp")
 	}
 
-	tcfg, valid := appOpts.Get(cflags.KeyTestnetConfig).(*akash.TestnetConfig)
+	tcfg, valid := appOpts.Get(cflags.KeyTestnetConfig).(*dicompute.TestnetConfig)
 	if !valid {
-		panic("cflags.KeyTestnetConfig is not of type *akash.TestnetConfig")
+		panic("cflags.KeyTestnetConfig is not of type *dicompute.TestnetConfig")
 	}
 
-	// Make modifications to the normal AkashApp required to run the network locally
-	return akash.InitAkashAppForTestnet(akashApp, db, tcfg)
+	// Make modifications to the normal DICOMPUTEApp required to run the network locally
+	return dicompute.InitDICOMPUTEAppForTestnet(dicomputeApp, db, tcfg)
 }

@@ -54,7 +54,7 @@ func (s *bmeGRPCRestTestSuite) TestQueryParams() {
 	}{
 		{
 			"query params via REST",
-			fmt.Sprintf("%s/akash/bme/v1/params", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/bme/v1/params", val.APIAddress),
 			false,
 		},
 	}
@@ -104,7 +104,7 @@ func (s *bmeGRPCRestTestSuite) TestQueryVaultState() {
 	}{
 		{
 			"query vault state via REST",
-			fmt.Sprintf("%s/akash/bme/v1/vault", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/bme/v1/vault", val.APIAddress),
 			false,
 		},
 	}
@@ -161,7 +161,7 @@ func (s *bmeGRPCRestTestSuite) TestQueryStatus() {
 	}{
 		{
 			"query status via REST",
-			fmt.Sprintf("%s/akash/bme/v1/status", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/bme/v1/status", val.APIAddress),
 			false,
 		},
 	}

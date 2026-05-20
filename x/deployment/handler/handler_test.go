@@ -648,7 +648,7 @@ func TestFundedDeployment(t *testing.T) {
 		bkeeper.
 			On("SendCoinsFromModuleToModule", mock.Anything, emodule.ModuleName, distrtypes.ModuleName, sdk.Coins{sdk.NewInt64Coin(depositMsg.Deposit.Amount.Denom, 10_000)}).
 			Return(nil).Once().
-			On("SendCoinsFromModuleToAccount", mock.Anything, emodule.ModuleName, mock.Anything, sdk.NewCoins(testutil.AkashCoin(t, 490_000))).
+			On("SendCoinsFromModuleToAccount", mock.Anything, emodule.ModuleName, mock.Anything, sdk.NewCoins(testutil.DICOMPUTECoin(t, 490_000))).
 			Return(nil).Once()
 	})
 

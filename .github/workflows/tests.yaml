@@ -185,7 +185,7 @@ jobs:
           name: validators-logs
           include-hidden-files: true
           path: |
-            .cache/run/upgrade/validators/logs/.akash*.log
+            .cache/run/upgrade/validators/logs/.dicompute*.log
 
   dispatch-release:
     runs-on: ubuntu-latest

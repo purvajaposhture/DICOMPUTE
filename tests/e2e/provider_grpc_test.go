@@ -81,13 +81,13 @@ func (s *providerGRPCRestTestSuite) TestGetProviders() {
 	}{
 		{
 			"get providers without pagination",
-			fmt.Sprintf("%s/akash/provider/v1beta4/providers", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/provider/v1beta4/providers", val.APIAddress),
 			provider,
 			1,
 		},
 		{
 			"get providers with pagination",
-			fmt.Sprintf("%s/akash/provider/v1beta4/providers?pagination.offset=2", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/provider/v1beta4/providers?pagination.offset=2", val.APIAddress),
 			types.Provider{},
 			0,
 		},
@@ -125,19 +125,19 @@ func (s *providerGRPCRestTestSuite) TestGetProvider() {
 	}{
 		{
 			"get provider with empty input",
-			fmt.Sprintf("%s/akash/provider/v1beta4/providers/%s", val.APIAddress, ""),
+			fmt.Sprintf("%s/dicompute/provider/v1beta4/providers/%s", val.APIAddress, ""),
 			true,
 			types.Provider{},
 		},
 		{
 			"get provider with invalid input",
-			fmt.Sprintf("%s/akash/provider/v1beta4/providers/%s", val.APIAddress, "hellohai"),
+			fmt.Sprintf("%s/dicompute/provider/v1beta4/providers/%s", val.APIAddress, "hellohai"),
 			true,
 			types.Provider{},
 		},
 		{
 			"valid get provider request",
-			fmt.Sprintf("%s/akash/provider/v1beta4/providers/%s", val.APIAddress, provider.Owner),
+			fmt.Sprintf("%s/dicompute/provider/v1beta4/providers/%s", val.APIAddress, provider.Owner),
 			false,
 			provider,
 		},

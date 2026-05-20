@@ -10,7 +10,7 @@ import (
 
 // LocalRPCClient wraps local.Local and implements the RPCClient interface
 // required by chain-sdk's aclient.DiscoverClient.
-// The local.Local client only implements client.CometRPC but not the Akash() method
+// The local.Local client only implements client.CometRPC but not the DICOMPUTE() method
 // needed by DiscoverClient to detect the API version.
 type LocalRPCClient struct {
 	*local.Local
@@ -23,8 +23,8 @@ func NewLocalRPCClient(lc *local.Local, registry *aclient.VersionRegistry) *Loca
 	return &LocalRPCClient{Local: lc, registry: registry}
 }
 
-// Akash implements the RPCClient interface required by chain-sdk.
+// DICOMPUTE implements the RPCClient interface required by chain-sdk.
 // Returns version discovery info from the local registry.
-func (c *LocalRPCClient) Akash(_ context.Context) (*aclient.Akash, error) {
-	return c.registry.ToAkash(), nil
+func (c *LocalRPCClient) DICOMPUTE(_ context.Context) (*aclient.DICOMPUTE, error) {
+	return c.registry.ToDICOMPUTE(), nil
 }

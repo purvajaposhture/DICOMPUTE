@@ -61,15 +61,15 @@ replace (
 
 	github.com/bytedance/sonic => github.com/bytedance/sonic v1.15.0
 
-	// use akash fork of cometbft
-	github.com/cometbft/cometbft => github.com/akash-network/cometbft v0.38.21-akash.1
-	// use akash fork of cosmos sdk
-	github.com/cosmos/cosmos-sdk => github.com/akash-network/cosmos-sdk v0.53.7-akash.1
+	// use dicompute fork of cometbft
+	github.com/cometbft/cometbft => github.com/dicompute-network/cometbft v0.38.21-dicompute.1
+	// use dicompute fork of cosmos sdk
+	github.com/cosmos/cosmos-sdk => github.com/dicompute-network/cosmos-sdk v0.53.7-dicompute.1
 
-	github.com/cosmos/gogoproto => github.com/akash-network/gogoproto v1.7.0-akash.2
+	github.com/cosmos/gogoproto => github.com/dicompute-network/gogoproto v1.7.0-dicompute.2
 
-	// use akash version of cosmos ledger api
-	github.com/cosmos/ledger-cosmos-go => github.com/akash-network/ledger-go/cosmos v0.16.0
+	// use dicompute version of cosmos ledger api
+	github.com/cosmos/ledger-cosmos-go => github.com/dicompute-network/ledger-go/cosmos v0.16.0
 
 	// Use regen gogoproto fork
 	// To be replaced by cosmos/gogoproto in future versions
@@ -80,7 +80,7 @@ replace (
 
 	github.com/zondax/hid => github.com/troian/hid v0.14.0
 
-	github.com/zondax/ledger-go => github.com/akash-network/ledger-go v0.16.0
+	github.com/zondax/ledger-go => github.com/dicompute-network/ledger-go v0.16.0
 
 	// stick with compatible version or x/exp in v0.47.x line
 	golang.org/x/exp => golang.org/x/exp v0.0.0-20230711153332-06a737ee72cb

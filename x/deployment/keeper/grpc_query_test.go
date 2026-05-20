@@ -29,7 +29,7 @@ import (
 type grpcTestSuite struct {
 	*state.TestSuite
 	t           *testing.T
-	app         *app.AkashApp
+	app         *app.DICOMPUTEApp
 	ctx         sdk.Context
 	keeper      keeper.IKeeper
 	ekeeper     ekeeper.Keeper

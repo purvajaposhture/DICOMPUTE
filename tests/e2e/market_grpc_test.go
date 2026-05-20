@@ -238,14 +238,14 @@ func (s *marketGRPCRestTestSuite) TestGetOrders() {
 	}{
 		{
 			"get orders without filters",
-			fmt.Sprintf("%s/akash/market/%s/orders/list", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/orders/list", val.APIAddress, v1beta5.GatewayVersion),
 			false,
 			order,
 			1,
 		},
 		{
 			"get orders with filters",
-			fmt.Sprintf("%s/akash/market/%s/orders/list?filters.owner=%s", val.APIAddress,
+			fmt.Sprintf("%s/dicompute/market/%s/orders/list?filters.owner=%s", val.APIAddress,
 				v1beta5.GatewayVersion,
 				order.ID.Owner),
 			false,
@@ -254,7 +254,7 @@ func (s *marketGRPCRestTestSuite) TestGetOrders() {
 		},
 		{
 			"get orders with wrong state filter",
-			fmt.Sprintf("%s/akash/market/%s/orders/list?filters.state=%s", val.APIAddress,
+			fmt.Sprintf("%s/dicompute/market/%s/orders/list?filters.state=%s", val.APIAddress,
 				v1beta5.GatewayVersion,
 				v1beta5.OrderStateInvalid.String()),
 			true,
@@ -263,7 +263,7 @@ func (s *marketGRPCRestTestSuite) TestGetOrders() {
 		},
 		{
 			"get orders with two filters",
-			fmt.Sprintf("%s/akash/market/%s/orders/list?filters.state=%s&filters.oseq=%d",
+			fmt.Sprintf("%s/dicompute/market/%s/orders/list?filters.state=%s&filters.oseq=%d",
 				val.APIAddress, v1beta5.GatewayVersion, order.State.String(), order.ID.OSeq),
 			false,
 			order,
@@ -304,13 +304,13 @@ func (s *marketGRPCRestTestSuite) TestGetOrder() {
 	}{
 		{
 			"get order with empty input",
-			fmt.Sprintf("%s/akash/market/%s/orders/info", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/orders/info", val.APIAddress, v1beta5.GatewayVersion),
 			true,
 			v1beta5.Order{},
 		},
 		{
 			"get order with invalid input",
-			fmt.Sprintf("%s/akash/market/%s/orders/info?id.owner=%s", val.APIAddress,
+			fmt.Sprintf("%s/dicompute/market/%s/orders/info?id.owner=%s", val.APIAddress,
 				v1beta5.GatewayVersion,
 				order.ID.Owner),
 			true,
@@ -318,7 +318,7 @@ func (s *marketGRPCRestTestSuite) TestGetOrder() {
 		},
 		{
 			"order not found",
-			fmt.Sprintf("%s/akash/market/%s/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d",
+			fmt.Sprintf("%s/dicompute/market/%s/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				order.ID.Owner, 249, 32, 235),
@@ -327,7 +327,7 @@ func (s *marketGRPCRestTestSuite) TestGetOrder() {
 		},
 		{
 			"valid get order request",
-			fmt.Sprintf("%s/akash/market/%s/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d",
+			fmt.Sprintf("%s/dicompute/market/%s/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				order.ID.Owner,
@@ -371,14 +371,14 @@ func (s *marketGRPCRestTestSuite) TestGetBids() {
 	}{
 		{
 			"get bids without filters",
-			fmt.Sprintf("%s/akash/market/%s/bids/list", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/bids/list", val.APIAddress, v1beta5.GatewayVersion),
 			false,
 			bid,
 			1,
 		},
 		{
 			"get bids with filters",
-			fmt.Sprintf("%s/akash/market/%s/bids/list?filters.owner=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/list?filters.owner=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				bid.ID.Owner),
@@ -388,7 +388,7 @@ func (s *marketGRPCRestTestSuite) TestGetBids() {
 		},
 		{
 			"get bids with wrong state filter",
-			fmt.Sprintf("%s/akash/market/%s/bids/list?filters.state=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/list?filters.state=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				v1beta5.BidStateInvalid.String()),
@@ -398,7 +398,7 @@ func (s *marketGRPCRestTestSuite) TestGetBids() {
 		},
 		{
 			"get bids with more filters",
-			fmt.Sprintf("%s/akash/market/%s/bids/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				bid.State.String(),
@@ -443,13 +443,13 @@ func (s *marketGRPCRestTestSuite) TestGetBid() {
 	}{
 		{
 			"get bid with empty input",
-			fmt.Sprintf("%s/akash/market/%s/bids/info", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/bids/info", val.APIAddress, v1beta5.GatewayVersion),
 			true,
 			v1beta5.Bid{},
 		},
 		{
 			"get bid with invalid input",
-			fmt.Sprintf("%s/akash/market/%s/bids/info?id.owner=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/info?id.owner=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				bid.ID.Owner),
@@ -458,7 +458,7 @@ func (s *marketGRPCRestTestSuite) TestGetBid() {
 		},
 		{
 			"bid not found",
-			fmt.Sprintf("%s/akash/market/%s/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				bid.ID.Provider,
@@ -471,7 +471,7 @@ func (s *marketGRPCRestTestSuite) TestGetBid() {
 		},
 		{
 			"valid get bid request",
-			fmt.Sprintf("%s/akash/market/%s/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				bid.ID.Owner,
@@ -516,14 +516,14 @@ func (s *marketGRPCRestTestSuite) TestGetLeases() {
 	}{
 		{
 			"get leases without filters",
-			fmt.Sprintf("%s/akash/market/%s/leases/list", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/leases/list", val.APIAddress, v1beta5.GatewayVersion),
 			false,
 			lease,
 			1,
 		},
 		{
 			"get leases with filters",
-			fmt.Sprintf("%s/akash/market/%s/leases/list?filters.owner=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/list?filters.owner=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				lease.ID.Owner),
@@ -533,7 +533,7 @@ func (s *marketGRPCRestTestSuite) TestGetLeases() {
 		},
 		{
 			"get leases with wrong state filter",
-			fmt.Sprintf("%s/akash/market/%s/leases/list?filters.state=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/list?filters.state=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				v1.LeaseStateInvalid.String()),
@@ -543,7 +543,7 @@ func (s *marketGRPCRestTestSuite) TestGetLeases() {
 		},
 		{
 			"get leases with more filters",
-			fmt.Sprintf("%s/akash/market/%s/leases/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				lease.State.String(),
@@ -588,13 +588,13 @@ func (s *marketGRPCRestTestSuite) TestGetLease() {
 	}{
 		{
 			"get lease with empty input",
-			fmt.Sprintf("%s/akash/market/%s/leases/info", val.APIAddress, v1beta5.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/market/%s/leases/info", val.APIAddress, v1beta5.GatewayVersion),
 			true,
 			v1.Lease{},
 		},
 		{
 			"get lease with invalid input",
-			fmt.Sprintf("%s/akash/market/%s/leases/info?id.owner=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/info?id.owner=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				lease.ID.Owner),
@@ -603,7 +603,7 @@ func (s *marketGRPCRestTestSuite) TestGetLease() {
 		},
 		{
 			"lease not found",
-			fmt.Sprintf("%s/akash/market/%s/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				lease.ID.Provider,
@@ -616,7 +616,7 @@ func (s *marketGRPCRestTestSuite) TestGetLease() {
 		},
 		{
 			"valid get lease request",
-			fmt.Sprintf("%s/akash/market/%s/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
+			fmt.Sprintf("%s/dicompute/market/%s/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
 				val.APIAddress,
 				v1beta5.GatewayVersion,
 				lease.ID.Owner,

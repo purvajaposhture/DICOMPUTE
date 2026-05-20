@@ -235,7 +235,7 @@ func (k Keeper) Create(ctx sdk.Context, deployment v1.Deployment, groups []types
 		return err
 	}
 
-	telemetry.IncrCounter(1.0, "akash.deployment_created")
+	telemetry.IncrCounter(1.0, "dicompute.deployment_created")
 
 	return nil
 }

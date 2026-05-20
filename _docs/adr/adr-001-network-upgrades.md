@@ -47,8 +47,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	upgradetypes "cosmossdk.io/x/upgrade/types"
 
-	apptypes "github.com/akash-network/node/app/types"
-	utypes "github.com/akash-network/node/upgrades/types"
+	apptypes "github.com/dicompute-network/node/app/types"
+	utypes "github.com/dicompute-network/node/upgrades/types"
 )
 
 // Step1 (mandatory): declare upgrade name. Must be Semver compliant with v prefix
@@ -105,7 +105,7 @@ func (up *upgrade) UpgradeHandler() upgradetypes.UpgradeHandler {
 package v0_24_0
 
 import (
-	utypes "github.com/akash-network/node/upgrades/types"
+	utypes "github.com/dicompute-network/node/upgrades/types"
 )
 
 // Step1 (mandatory): create init function
@@ -176,7 +176,7 @@ func migrateDeploymentGroup(fromBz []byte, cdc codec.BinaryCodec) codec.ProtoMar
    ```go
    import (
    	// nolint: revive
-   	_ "github.com/akash-network/node/upgrades/software/v0.24.0"
+   	_ "github.com/dicompute-network/node/upgrades/software/v0.24.0"
    )
    ```
 2. Once imported, the upgrade will register itself, and `App` will initialize it during startup

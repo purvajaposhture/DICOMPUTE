@@ -18,7 +18,7 @@ func TestUpgradesName(t *testing.T) {
 	for name := range upgrades {
 		// NOTE this is the only exception to the upgrade name
 		// Rest MUST be compliant with SEMVER
-		if name == "akash_v0.15.0_cosmos_v0.44.x" {
+		if name == "dicompute_v0.15.0_cosmos_v0.44.x" {
 			continue
 		}
 

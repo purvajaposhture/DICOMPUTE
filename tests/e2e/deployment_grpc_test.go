@@ -107,14 +107,14 @@ func (s *deploymentGRPCRestTestSuite) TestGetDeployments() {
 	}{
 		{
 			"get deployments without filters",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/list", val.APIAddress, dvbeta.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/list", val.APIAddress, dvbeta.GatewayVersion),
 			false,
 			deployment,
 			1,
 		},
 		{
 			"get deployments with filters",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/list?filters.owner=%s", val.APIAddress,
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/list?filters.owner=%s", val.APIAddress,
 				dvbeta.GatewayVersion,
 				deployment.Deployment.ID.Owner),
 			false,
@@ -123,7 +123,7 @@ func (s *deploymentGRPCRestTestSuite) TestGetDeployments() {
 		},
 		{
 			"get deployments with wrong state filter",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/list?filters.state=%s", val.APIAddress, dvbeta.GatewayVersion,
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/list?filters.state=%s", val.APIAddress, dvbeta.GatewayVersion,
 				v1.DeploymentStateInvalid.String()),
 			true,
 			dvbeta.QueryDeploymentResponse{},
@@ -131,7 +131,7 @@ func (s *deploymentGRPCRestTestSuite) TestGetDeployments() {
 		},
 		{
 			"get deployments with two filters",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/list?filters.state=%s&filters.dseq=%d",
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/list?filters.state=%s&filters.dseq=%d",
 				val.APIAddress, dvbeta.GatewayVersion, deployment.Deployment.State.String(), deployment.Deployment.ID.DSeq),
 			false,
 			deployment,
@@ -171,20 +171,20 @@ func (s *deploymentGRPCRestTestSuite) TestGetDeployment() {
 	}{
 		{
 			"get deployment with empty input",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/info", val.APIAddress, dvbeta.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/info", val.APIAddress, dvbeta.GatewayVersion),
 			true,
 			dvbeta.QueryDeploymentResponse{},
 		},
 		{
 			"get deployment with invalid input",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/info?id.owner=%s", val.APIAddress, dvbeta.GatewayVersion,
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/info?id.owner=%s", val.APIAddress, dvbeta.GatewayVersion,
 				deployment.Deployment.ID.Owner),
 			true,
 			dvbeta.QueryDeploymentResponse{},
 		},
 		{
 			"deployment not found",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/info?id.owner=%s&id.dseq=%d", val.APIAddress, dvbeta.GatewayVersion,
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/info?id.owner=%s&id.dseq=%d", val.APIAddress, dvbeta.GatewayVersion,
 				deployment.Deployment.ID.Owner,
 				249),
 			true,
@@ -192,7 +192,7 @@ func (s *deploymentGRPCRestTestSuite) TestGetDeployment() {
 		},
 		{
 			"valid get deployment request",
-			fmt.Sprintf("%s/akash/deployment/%s/deployments/info?id.owner=%s&id.dseq=%d",
+			fmt.Sprintf("%s/dicompute/deployment/%s/deployments/info?id.owner=%s&id.dseq=%d",
 				val.APIAddress,
 				dvbeta.GatewayVersion,
 				deployment.Deployment.ID.Owner,
@@ -235,19 +235,19 @@ func (s *deploymentGRPCRestTestSuite) TestGetGroup() {
 	}{
 		{
 			"get group with empty input",
-			fmt.Sprintf("%s/akash/deployment/%s/groups/info", val.APIAddress, dvbeta.GatewayVersion),
+			fmt.Sprintf("%s/dicompute/deployment/%s/groups/info", val.APIAddress, dvbeta.GatewayVersion),
 			true,
 			dvbeta.Group{},
 		},
 		{
 			"get group with invalid input",
-			fmt.Sprintf("%s/akash/deployment/%s/groups/info?id.owner=%s", val.APIAddress, dvbeta.GatewayVersion, group.ID.Owner),
+			fmt.Sprintf("%s/dicompute/deployment/%s/groups/info?id.owner=%s", val.APIAddress, dvbeta.GatewayVersion, group.ID.Owner),
 			true,
 			dvbeta.Group{},
 		},
 		{
 			"group not found",
-			fmt.Sprintf("%s/akash/deployment/%s/groups/info?id.owner=%s&id.dseq=%d", val.APIAddress,
+			fmt.Sprintf("%s/dicompute/deployment/%s/groups/info?id.owner=%s&id.dseq=%d", val.APIAddress,
 				dvbeta.GatewayVersion,
 				group.ID.Owner,
 				249),
@@ -256,7 +256,7 @@ func (s *deploymentGRPCRestTestSuite) TestGetGroup() {
 		},
 		{
 			"valid get group request",
-			fmt.Sprintf("%s/akash/deployment/%s/groups/info?id.owner=%s&id.dseq=%d&id.gseq=%d",
+			fmt.Sprintf("%s/dicompute/deployment/%s/groups/info?id.owner=%s&id.dseq=%d&id.gseq=%d",
 				val.APIAddress,
 				dvbeta.GatewayVersion,
 				group.ID.Owner,

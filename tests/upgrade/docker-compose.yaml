@@ -1,7 +1,7 @@
-# Docker Compose for Akash Local Development with Pyth Oracle
+# Docker Compose for DICOMPUTE Local Development with Pyth Oracle
 #
 # This setup includes:
-#   - akash-node: Single-node validator with Wormhole and Pyth contracts
+#   - dicompute-node: Single-node validator with Wormhole and Pyth contracts
 #   - hermes-client: Price relayer that submits Pyth prices to the oracle
 #
 # Prerequisites:
@@ -23,7 +23,7 @@
 ---
 services:
   validator:
-    image: ghcr.io/akash-network/node:latest-arm64
+    image: ghcr.io/dicompute-network/node:latest-arm64
     container_name: validator
     hostname: validator
     environment:
@@ -35,7 +35,7 @@ services:
       - "9090:9090"    # gRPC
       - "1317:1317"    # REST API
     volumes:
-      - ${AKASH_HOME}/:/root/.akash
+      - ${AKASH_HOME}/:/root/.dicompute
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:26657/status"]
       interval: 5s
@@ -43,7 +43,7 @@ services:
       retries: 60
       start_period: 5s
     networks:
-      - akash-local
+      - dicompute-local
     restart: unless-stopped
     logging:
       driver: json-file
@@ -51,15 +51,15 @@ services:
         max-size: "50m"
         max-file: "5"
     command:
-      - akash
+      - dicompute
       - start
-      - --home=/root/.akash
+      - --home=/root/.dicompute
 
   # =============================================================================
   # Hermes Price Relayer
   # =============================================================================
   hermes-client:
-    image: ghcr.io/akash-network/hermes:latest
+    image: ghcr.io/dicompute-network/hermes:latest
     container_name: hermes-client
     hostname: hermes-client
     environment:
@@ -94,7 +94,7 @@ services:
       validator:
         condition: service_healthy
     networks:
-      - akash-local
+      - dicompute-local
     restart: unless-stopped
     logging:
       driver: json-file
@@ -106,6 +106,6 @@ services:
 # Networks
 # =============================================================================
 networks:
-  akash-local:
-    name: akash-local-network
+  dicompute-local:
+    name: dicompute-local-network
     driver: bridge

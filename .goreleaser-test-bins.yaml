@@ -10,9 +10,9 @@ env:
   - GO111MODULE=on
   - CGO_ENABLED=1
 builds:
-  - id: akash-darwin-amd64
-    binary: akash
-    main: ./cmd/akash
+  - id: dicompute-darwin-amd64
+    binary: dicompute
+    main: ./cmd/dicompute
     goarch:
       - amd64
     goos:
@@ -30,9 +30,9 @@ builds:
       - "{{ .Env.BUILD_LDFLAGS }}"
       - -s -w
       - -linkmode=external
-  - id: akash-darwin-arm64
-    binary: akash
-    main: ./cmd/akash
+  - id: dicompute-darwin-arm64
+    binary: dicompute
+    main: ./cmd/dicompute
     goarch:
       - arm64
     goos:
@@ -50,9 +50,9 @@ builds:
       - "{{ .Env.BUILD_LDFLAGS }}"
       - -s -w
       - -linkmode=external
-  - id: akash-linux-amd64
-    binary: akash
-    main: ./cmd/akash
+  - id: dicompute-linux-amd64
+    binary: dicompute
+    main: ./cmd/dicompute
     env:
       - CC=x86_64-linux-gnu-gcc
       - CXX=x86_64-linux-gnu-g++
@@ -70,9 +70,9 @@ builds:
       - -linkmode=external
       # yamllint disable-line rule:line-length
       - -extldflags "-L./.cache/lib -lwasmvm_muslc.x86_64 -Wl,-z,muldefs -lm -lrt -lc"
-  - id: akash-linux-arm64
-    binary: akash
-    main: ./cmd/akash
+  - id: dicompute-linux-arm64
+    binary: dicompute
+    main: ./cmd/dicompute
     goarch:
       - arm64
     goos:
@@ -91,20 +91,20 @@ builds:
       # yamllint disable-line rule:line-length
       - -extldflags "-L./.cache/lib -lwasmvm_muslc.aarch64 -Wl,-z,muldefs -lm -lrt -lc"
 universal_binaries:
-  - id: akash-darwin-universal
+  - id: dicompute-darwin-universal
     ids:
-      - akash-darwin-amd64
-      - akash-darwin-arm64
+      - dicompute-darwin-amd64
+      - dicompute-darwin-arm64
     replace: true
-    name_template: "akash"
+    name_template: "dicompute"
 
 archives:
   - id: wo/version
     ids:
-      - akash-darwin-universal
-      - akash-linux-amd64
-      - akash-linux-arm64
-    name_template: "akash_{{ .Os }}_{{ .Arch }}"
+      - dicompute-darwin-universal
+      - dicompute-linux-amd64
+      - dicompute-linux-arm64
+    name_template: "dicompute_{{ .Os }}_{{ .Arch }}"
     wrap_in_directory: false
     formats:
       - zip

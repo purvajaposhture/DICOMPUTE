@@ -12,7 +12,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	akash "pkg.akt.dev/node/v2/app"
+	dicompute "pkg.akt.dev/node/v2/app"
 )
 
 type PrivValidatorKey struct {
@@ -48,7 +48,7 @@ type TestnetValidator struct {
 	Commission        stakingtypes.Commission   `json:"commission"`
 	MinSelfDelegation sdkmath.Int               `json:"min_self_delegation"`
 	Home              string                    `json:"home"`
-	Delegations       []akash.TestnetDelegation `json:"delegations"`
+	Delegations       []dicompute.TestnetDelegation `json:"delegations"`
 
 	privValidator    *pvm.FilePV
 	pubKey           crypto.PubKey
@@ -61,9 +61,9 @@ type TestnetValidators []TestnetValidator
 type TestnetConfig struct {
 	ChainID    string                 `json:"chain_id"`
 	Validators TestnetValidators      `json:"validators"`
-	Accounts   []akash.TestnetAccount `json:"accounts"`
-	Gov        akash.TestnetGovConfig `json:"gov"`
-	upgrade    akash.TestnetUpgrade
+	Accounts   []dicompute.TestnetAccount `json:"accounts"`
+	Gov        dicompute.TestnetGovConfig `json:"gov"`
+	upgrade    dicompute.TestnetUpgrade
 }
 
 func TrimQuotes(data string) string {

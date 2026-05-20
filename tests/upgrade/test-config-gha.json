@@ -1,10 +1,10 @@
 {
-    "chain-id": "localakash",
+    "chain-id": "localdicompute",
     "validators": [
-        ".akash0"
+        ".dicompute0"
     ],
     "work": {
-        "home": ".akash0",
+        "home": ".dicompute0",
         "key": "validator0"
     }
 }

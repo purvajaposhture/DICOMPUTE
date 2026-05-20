@@ -10,7 +10,7 @@ import (
 	_ "pkg.akt.dev/node/v2/upgrades"
 )
 
-func (app *AkashApp) registerUpgradeHandlers() error {
+func (app *DICOMPUTEApp) registerUpgradeHandlers() error {
 	upgradeInfo, err := app.Keepers.Cosmos.Upgrade.ReadUpgradeInfoFromDisk()
 	if err != nil {
 		return err
@@ -58,5 +58,5 @@ func (app *AkashApp) registerUpgradeHandlers() error {
 	return nil
 }
 
-func (app *AkashApp) customPreUpgradeHandler(_ upgradetypes.Plan) {
+func (app *DICOMPUTEApp) customPreUpgradeHandler(_ upgradetypes.Plan) {
 }

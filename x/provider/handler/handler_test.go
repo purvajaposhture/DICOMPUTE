@@ -12,7 +12,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	types "pkg.akt.dev/go/node/provider/v1beta4"
-	akashtypes "pkg.akt.dev/go/node/types/attributes/v1"
+	dicomputetypes "pkg.akt.dev/go/node/types/attributes/v1"
 	"pkg.akt.dev/go/testutil"
 
 	"pkg.akt.dev/node/v2/testutil/state"
@@ -116,7 +116,7 @@ func TestProviderCreateWithDuplicated(t *testing.T) {
 
 	res, err := suite.handler(suite.ctx, msg)
 	require.Nil(t, res)
-	require.EqualError(t, err, akashtypes.ErrAttributesDuplicateKeys.Error())
+	require.EqualError(t, err, dicomputetypes.ErrAttributesDuplicateKeys.Error())
 }
 
 func TestProviderUpdateWithDuplicated(t *testing.T) {
@@ -141,7 +141,7 @@ func TestProviderUpdateWithDuplicated(t *testing.T) {
 
 	res, err := suite.handler(suite.ctx, updateMsg)
 	require.Nil(t, res)
-	require.EqualError(t, err, akashtypes.ErrAttributesDuplicateKeys.Error())
+	require.EqualError(t, err, dicomputetypes.ErrAttributesDuplicateKeys.Error())
 }
 
 func TestProviderUpdateExisting(t *testing.T) {

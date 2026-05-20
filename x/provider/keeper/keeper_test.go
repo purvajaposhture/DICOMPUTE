@@ -86,7 +86,7 @@ func TestProviderUpdateExisting(t *testing.T) {
 	err := keeper.Create(ctx, prov)
 	require.NoError(t, err)
 
-	prov.HostURI = "akash.domain.com"
+	prov.HostURI = "dicompute.domain.com"
 	err = keeper.Update(ctx, prov)
 	require.NoError(t, err)
 

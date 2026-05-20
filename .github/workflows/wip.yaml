@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: akash-network/wip-check@v1
+      - uses: dicompute-network/wip-check@v1
         with:
           labels: '["do-not-merge", "wip", "rfc"]'
           keywords: '["WIP", "wip", "RFC", "rfc"]'

@@ -54,7 +54,7 @@ func (s *oracleGRPCRestTestSuite) TestQueryParams() {
 	}{
 		{
 			"query params via REST",
-			fmt.Sprintf("%s/akash/oracle/v1/params", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/oracle/v1/params", val.APIAddress),
 			false,
 		},
 	}
@@ -104,17 +104,17 @@ func (s *oracleGRPCRestTestSuite) TestQueryPrices() {
 	}{
 		{
 			"query prices without filters",
-			fmt.Sprintf("%s/akash/oracle/v1/prices", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/oracle/v1/prices", val.APIAddress),
 			false,
 		},
 		{
 			"query prices with asset filter",
-			fmt.Sprintf("%s/akash/oracle/v1/prices?filters.asset_denom=uakt", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/oracle/v1/prices?filters.asset_denom=uakt", val.APIAddress),
 			false,
 		},
 		{
 			"query prices with base filter",
-			fmt.Sprintf("%s/akash/oracle/v1/prices?filters.base_denom=uusd", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/oracle/v1/prices?filters.base_denom=uusd", val.APIAddress),
 			false,
 		},
 	}
@@ -167,7 +167,7 @@ func (s *oracleGRPCRestTestSuite) TestQueryPriceFeedConfig() {
 	}{
 		{
 			"query price feed config",
-			fmt.Sprintf("%s/akash/oracle/v1/price_feed_config/uakt", val.APIAddress),
+			fmt.Sprintf("%s/dicompute/oracle/v1/price_feed_config/uakt", val.APIAddress),
 			false,
 		},
 	}

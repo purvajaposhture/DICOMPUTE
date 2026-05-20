@@ -1,6 +1,6 @@
-host: https://test.provider.akash.network
+host: https://test.provider.dicompute.network
 attributes:
   - key: region
     value: sfo
   - key: moniker
-    value: akash
+    value: dicompute

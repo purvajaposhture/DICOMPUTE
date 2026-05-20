@@ -100,7 +100,7 @@ replacing hand-rolled prefix keys with type-safe, indexed collections. This impr
 
 ##### v0.38.0
 
-Upgrade x/stores keys to improve read performance of certain modules as described in [AEP-61](https://github.com/akash-network/AEP/blob/main/AEPS/AEP-61.md)
+Upgrade x/stores keys to improve read performance of certain modules as described in [AEP-61](https://github.com/dicompute-network/AEP/blob/main/AEPS/AEP-61.md)
 
 - Migrations
     - cert `2 -> 3`
@@ -129,7 +129,7 @@ Upgrade x/stores keys to improve read performance of certain modules as describe
 
 ##### v0.32.0
 
-1. remove checking if provider has active leases during provider update transactions. This check was iterating thru all existing leases on the network causing gas and thus transaction fees go to up to 3AKT which is way above desired values. Initial intention of check was to prevent provider changing attributes that is in use by active leases. Akash Network team will reintroduce check by adding secondary indexes in future network upgrades.
+1. remove checking if provider has active leases during provider update transactions. This check was iterating thru all existing leases on the network causing gas and thus transaction fees go to up to 3AKT which is way above desired values. Initial intention of check was to prevent provider changing attributes that is in use by active leases. DICOMPUTE Network team will reintroduce check by adding secondary indexes in future network upgrades.
 2. remove secondary index for market store which was never user.
 
 - Migrations
@@ -198,9 +198,9 @@ Upgrade x/stores keys to improve read performance of certain modules as describe
         - `icacontroller`
         - `icahost`
 
-##### v0.15.0 (upgrade name `akash_v0.15.0_cosmos_v0.44.x`)
+##### v0.15.0 (upgrade name `dicompute_v0.15.0_cosmos_v0.44.x`)
 
-1. Introduce Akash marketplace
+1. Introduce DICOMPUTE marketplace
 2. Migrate store prefixes from v0.38/v0.39 to 0.40
 
 - Stores

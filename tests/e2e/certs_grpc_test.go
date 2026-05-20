@@ -85,7 +85,7 @@ func (s *certsGRPCRestTestSuite) TestGenerateParse() {
 // 	}{
 // 		{
 // 			"get certificates without filters",
-// 			fmt.Sprintf("%s/akash/cert/%s/certificates/list", val.APIAddress, atypes.ProtoAPIVersion),
+// 			fmt.Sprintf("%s/dicompute/cert/%s/certificates/list", val.APIAddress, atypes.ProtoAPIVersion),
 // 			false,
 // 			certs,
 // 			1,

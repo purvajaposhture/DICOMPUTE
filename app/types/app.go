@@ -91,7 +91,7 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "akash"
+	AccountAddressPrefix = "dicompute"
 )
 
 var ErrEmptyFieldName = errors.New("empty field name")
@@ -117,7 +117,7 @@ type AppKeepers struct {
 		Wasm            *wasmkeeper.Keeper
 	}
 
-	Akash struct {
+	DICOMPUTE struct {
 		Audit      akeeper.Keeper
 		Bme        bmekeeper.Keeper
 		Cert       ckeeper.Keeper
@@ -418,14 +418,14 @@ func (app *App) InitNormalKeepers(
 
 	clientKeeper.AddRoute(ibctm.ModuleName, &app.Keepers.Modules.TMLight)
 
-	app.Keepers.Akash.Oracle = okeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Oracle = okeeper.NewKeeper(
 		cdc,
 		app.keys[otypes.StoreKey],
 		app.tkeys[otypes.TStoreKey],
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 	)
 
-	app.Keepers.Akash.Bme = bmekeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Bme = bmekeeper.NewKeeper(
 		cdc,
 		app.keys[bmetypes.StoreKey],
 		app.tkeys[bmetypes.TStoreKey],
@@ -433,58 +433,58 @@ func (app *App) InitNormalKeepers(
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 		app.Keepers.Cosmos.Acct,
 		app.Keepers.Cosmos.Bank,
-		app.Keepers.Akash.Oracle,
+		app.Keepers.DICOMPUTE.Oracle,
 	)
 
-	app.Keepers.Akash.Escrow = ekeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Escrow = ekeeper.NewKeeper(
 		cdc,
 		app.keys[etypes.StoreKey],
 		app.AC,
 		app.Keepers.Cosmos.Bank,
 		app.Keepers.Cosmos.Authz,
-		app.Keepers.Akash.Oracle,
-		app.Keepers.Akash.Bme,
+		app.Keepers.DICOMPUTE.Oracle,
+		app.Keepers.DICOMPUTE.Bme,
 	)
 
-	app.Keepers.Akash.Market = mkeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Market = mkeeper.NewKeeper(
 		cdc,
 		app.keys[mtypes.StoreKey],
-		app.Keepers.Akash.Escrow,
+		app.Keepers.DICOMPUTE.Escrow,
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 	)
 
-	app.Keepers.Akash.Deployment = dkeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Deployment = dkeeper.NewKeeper(
 		cdc,
 		app.keys[dtypes.StoreKey],
-		app.Keepers.Akash.Escrow,
-		app.Keepers.Akash.Oracle,
-		app.Keepers.Akash.Market,
+		app.Keepers.DICOMPUTE.Escrow,
+		app.Keepers.DICOMPUTE.Oracle,
+		app.Keepers.DICOMPUTE.Market,
 		app.Keepers.Cosmos.Authz,
 		app.Keepers.Cosmos.Bank,
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 	)
 
-	app.Keepers.Akash.Provider = pkeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Provider = pkeeper.NewKeeper(
 		cdc,
 		app.keys[ptypes.StoreKey],
 	)
 
-	app.Keepers.Akash.Audit = akeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Audit = akeeper.NewKeeper(
 		cdc,
 		app.keys[atypes.StoreKey],
 	)
 
-	app.Keepers.Akash.Cert = ckeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Cert = ckeeper.NewKeeper(
 		cdc,
 		app.keys[ctypes.StoreKey],
 	)
 
-	app.Keepers.Akash.Epochs = epochskeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Epochs = epochskeeper.NewKeeper(
 		runtime.NewKVStoreService(app.keys[epochstypes.StoreKey]),
 		cdc,
 	)
 
-	app.Keepers.Akash.Wasm = wkeeper.NewKeeper(
+	app.Keepers.DICOMPUTE.Wasm = wkeeper.NewKeeper(
 		cdc,
 		app.keys[wtypes.StoreKey],
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
@@ -493,13 +493,13 @@ func (app *App) InitNormalKeepers(
 	wOpts := make([]wasmkeeper.Option, 0, len(wasmOpts)+2)
 
 	wOpts = append(wOpts, wasmkeeper.WithMessageHandlerDecorator(
-		app.Keepers.Akash.Wasm.NewMsgFilterDecorator(),
+		app.Keepers.DICOMPUTE.Wasm.NewMsgFilterDecorator(),
 	))
 
-	// Add custom query plugin for Akash-specific queries from CosmWasm contracts.
-	// This enables contracts to query oracle module parameters using AkashQuery::OracleParams.
+	// Add custom query plugin for DICOMPUTE-specific queries from CosmWasm contracts.
+	// This enables contracts to query oracle module parameters using DICOMPUTEQuery::OracleParams.
 	wOpts = append(wOpts, wasmkeeper.WithQueryPlugins(&wasmkeeper.QueryPlugins{
-		Custom: wasmbindings.CustomQuerier(app.Keepers.Akash.Oracle),
+		Custom: wasmbindings.CustomQuerier(app.Keepers.DICOMPUTE.Oracle),
 	}))
 
 	wOpts = append(wOpts, wasmOpts...)
@@ -507,7 +507,7 @@ func (app *App) InitNormalKeepers(
 	// The last arguments can contain custom message handlers and custom query handlers
 	// if we want to allow any custom callbacks
 	wasmCapabilities := wasmkeeper.BuiltInCapabilities()
-	wasmCapabilities = append(wasmCapabilities, "akash")
+	wasmCapabilities = append(wasmCapabilities, "dicompute")
 
 	wasmKeeper := wasmkeeper.NewKeeper(
 		cdc,
@@ -566,15 +566,15 @@ func (app *App) SetupHooks() {
 	)
 
 	hook := mhooks.New(
-		app.Keepers.Akash.Deployment,
-		app.Keepers.Akash.Market,
+		app.Keepers.DICOMPUTE.Deployment,
+		app.Keepers.DICOMPUTE.Market,
 	)
 
-	app.Keepers.Akash.Escrow.AddOnAccountClosedHook(hook.OnEscrowAccountClosed)
-	app.Keepers.Akash.Escrow.AddOnPaymentClosedHook(hook.OnEscrowPaymentClosed)
+	app.Keepers.DICOMPUTE.Escrow.AddOnAccountClosedHook(hook.OnEscrowAccountClosed)
+	app.Keepers.DICOMPUTE.Escrow.AddOnPaymentClosedHook(hook.OnEscrowPaymentClosed)
 
-	app.Keepers.Akash.Epochs.SetHooks(epochstypes.NewMultiEpochHooks(
-		okeeper.EpochHooksFor(app.Keepers.Akash.Oracle),
+	app.Keepers.DICOMPUTE.Epochs.SetHooks(epochstypes.NewMultiEpochHooks(
+		okeeper.EpochHooksFor(app.Keepers.DICOMPUTE.Oracle),
 	))
 }
 
@@ -595,7 +595,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName).WithKeyTable(ibctransfertypes.ParamKeyTable())
 	paramsKeeper.Subspace(ibcexported.ModuleName).WithKeyTable(ibctable)
 
-	// akash params subspaces
+	// dicompute params subspaces
 	paramsKeeper.Subspace(dtypes.ModuleName).WithKeyTable(dvbeta.ParamKeyTable())
 	paramsKeeper.Subspace(mtypes.ModuleName).WithKeyTable(mvbeta.ParamKeyTable())
 

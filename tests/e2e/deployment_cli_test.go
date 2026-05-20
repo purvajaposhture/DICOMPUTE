@@ -264,7 +264,7 @@ func (s *deploymentIntegrationTestSuite) TestDeployment() {
 		s.cctx,
 		cli.TestFlags().
 			WithOutputJSON().
-			WithOwner("akash102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt")...,
+			WithOwner("dicompute102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt")...,
 	)
 	s.Require().Error(err)
 

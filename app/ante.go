@@ -36,11 +36,11 @@ func NewAnteHandler(options HandlerOptions) (sdk.AnteHandler, error) {
 	}
 
 	if options.GovKeeper == nil {
-		return nil, sdkerrors.ErrLogic.Wrap("akash governance keeper is required for ante builder")
+		return nil, sdkerrors.ErrLogic.Wrap("dicompute governance keeper is required for ante builder")
 	}
 
 	if options.FeegrantKeeper == nil {
-		return nil, sdkerrors.ErrLogic.Wrap("akash feegrant keeper is required for ante builder")
+		return nil, sdkerrors.ErrLogic.Wrap("dicompute feegrant keeper is required for ante builder")
 	}
 
 	anteDecorators := []sdk.AnteDecorator{

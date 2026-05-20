@@ -131,7 +131,7 @@ func (ms msgServer) CreateBid(goCtx context.Context, msg *mvbeta.MsgCreateBid) (
 		return &mvbeta.MsgCreateBidResponse{}, err
 	}
 
-	telemetry.IncrCounter(1.0, "akash.bids")
+	telemetry.IncrCounter(1.0, "dicompute.bids")
 	return &mvbeta.MsgCreateBidResponse{}, nil
 }
 
@@ -186,7 +186,7 @@ func (ms msgServer) CloseBid(goCtx context.Context, msg *mvbeta.MsgCloseBid) (*m
 
 	_ = ms.keepers.Escrow.PaymentClose(ctx, lease.ID.ToEscrowPaymentID())
 
-	telemetry.IncrCounter(1.0, "akash.order_closed")
+	telemetry.IncrCounter(1.0, "dicompute.order_closed")
 
 	return &mvbeta.MsgCloseBidResponse{}, nil
 }

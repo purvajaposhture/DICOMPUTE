@@ -20,7 +20,7 @@ import (
 
 type grpcTestSuite struct {
 	t       *testing.T
-	app     *app.AkashApp
+	app     *app.DICOMPUTEApp
 	ctx     sdk.Context
 	keeper  keeper.Keeper
 	qclient types.QueryClient

@@ -72,21 +72,21 @@ import (
 )
 
 const (
-	AppName = "akash"
+	AppName = "dicompute"
 )
 
 var (
-	DefaultHome = os.ExpandEnv("$HOME/.akash")
+	DefaultHome = os.ExpandEnv("$HOME/.dicompute")
 
-	_ runtime.AppI            = (*AkashApp)(nil)
-	_ servertypes.Application = (*AkashApp)(nil)
+	_ runtime.AppI            = (*DICOMPUTEApp)(nil)
+	_ servertypes.Application = (*DICOMPUTEApp)(nil)
 
 	// module accounts that are allowed to receive tokens
 	allowedReceivingModAcc = map[string]bool{}
 )
 
-// AkashApp extends ABCI application
-type AkashApp struct {
+// DICOMPUTEApp extends ABCI application
+type DICOMPUTEApp struct {
 	*baseapp.BaseApp
 	*apptypes.App
 
@@ -98,7 +98,7 @@ type AkashApp struct {
 	invCheckPeriod    uint
 }
 
-// NewApp creates and returns a new Akash App.
+// NewApp creates and returns a new DICOMPUTE App.
 func NewApp(
 	logger log.Logger,
 	db dbm.DB,
@@ -109,7 +109,7 @@ func NewApp(
 	encodingConfig sdkutil.EncodingConfig,
 	appOpts servertypes.AppOptions,
 	options ...func(*baseapp.BaseApp),
-) *AkashApp {
+) *DICOMPUTEApp {
 	appCodec := encodingConfig.Codec
 	aminoCdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
@@ -135,7 +135,7 @@ func NewApp(
 		}
 	}
 
-	app := &AkashApp{
+	app := &DICOMPUTEApp{
 		BaseApp: bapp,
 		App: &apptypes.App{
 			Cdc: appCodec,
@@ -318,7 +318,7 @@ func NewApp(
 //	epochstypes.ModuleName,
 //	oracle.ModuleName,
 //	bme.ModuleName,
-//	// akash wasm module must be prior wasm
+//	// dicompute wasm module must be prior wasm
 //	awasm.ModuleName,
 //	// wasm after ibc transfer
 //	wasmtypes.ModuleName,
@@ -340,7 +340,7 @@ func orderBeginBlockers(modules []string) []string {
 	// escrow must come up after bme
 	ord.Before(bme.ModuleName, escrow.ModuleName)
 
-	// akash wasm module must be prior wasm
+	// dicompute wasm module must be prior wasm
 	ord.Before(awasm.ModuleName, wasmtypes.ModuleName)
 	// wasm after ibc transfer
 	ord.Before(transfertypes.ModuleName, wasmtypes.ModuleName)
@@ -377,7 +377,7 @@ func orderBeginBlockers(modules []string) []string {
 //	transfertypes.ModuleName,
 //	ibchost.ModuleName,
 //	feegrant.ModuleName,
-//	// akash wasm module must be prior wasm
+//	// dicompute wasm module must be prior wasm
 //	awasm.ModuleName,
 //	// wasm after ibc transfer
 //	wasmtypes.ModuleName,
@@ -413,10 +413,10 @@ func getGenesisTime(appOpts servertypes.AppOptions, homePath string) time.Time {
 }
 
 // Name returns the name of the App
-func (app *AkashApp) Name() string { return app.BaseApp.Name() }
+func (app *DICOMPUTEApp) Name() string { return app.BaseApp.Name() }
 
 // InitChainer application update at chain initialization
-func (app *AkashApp) InitChainer(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
+func (app *DICOMPUTEApp) InitChainer(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
 	var genesisState GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
@@ -430,7 +430,7 @@ func (app *AkashApp) InitChainer(ctx sdk.Context, req *abci.RequestInitChain) (*
 }
 
 // PreBlocker application updates before each begin block.
-func (app *AkashApp) PreBlocker(ctx sdk.Context, _ *abci.RequestFinalizeBlock) (*sdk.ResponsePreBlock, error) {
+func (app *DICOMPUTEApp) PreBlocker(ctx sdk.Context, _ *abci.RequestFinalizeBlock) (*sdk.ResponsePreBlock, error) {
 	// Set gas meter to the free gas meter.
 	// This is because there is currently non-deterministic gas usage in the
 	// pre-blocker, e.g. due to hydration of in-memory data structures.
@@ -443,7 +443,7 @@ func (app *AkashApp) PreBlocker(ctx sdk.Context, _ *abci.RequestFinalizeBlock) (
 }
 
 // BeginBlocker is a function in which application updates every begin block
-func (app *AkashApp) BeginBlocker(ctx sdk.Context) (sdk.BeginBlock, error) {
+func (app *DICOMPUTEApp) BeginBlocker(ctx sdk.Context) (sdk.BeginBlock, error) {
 	if patch, exists := utypes.GetHeightPatchesList()[ctx.BlockHeight()]; exists {
 		app.Logger().Info(fmt.Sprintf("found patch %s for current height %d. applying...", patch.Name(), ctx.BlockHeight()))
 		patch.Begin(ctx, &app.Keepers)
@@ -454,46 +454,46 @@ func (app *AkashApp) BeginBlocker(ctx sdk.Context) (sdk.BeginBlock, error) {
 }
 
 // EndBlocker is a function in which an application updates every end block
-func (app *AkashApp) EndBlocker(ctx sdk.Context) (sdk.EndBlock, error) {
+func (app *DICOMPUTEApp) EndBlocker(ctx sdk.Context) (sdk.EndBlock, error) {
 	return app.MM.EndBlock(ctx)
 }
 
 // Precommitter application updates before the committal of a block after all transactions have been delivered.
-func (app *AkashApp) Precommitter(ctx sdk.Context) {
+func (app *DICOMPUTEApp) Precommitter(ctx sdk.Context) {
 	if err := app.MM.Precommit(ctx); err != nil {
 		panic(err)
 	}
 }
 
-func (app *AkashApp) PrepareCheckStater(ctx sdk.Context) {
+func (app *DICOMPUTEApp) PrepareCheckStater(ctx sdk.Context) {
 	if err := app.MM.PrepareCheckState(ctx); err != nil {
 		panic(err)
 	}
 }
 
-// LegacyAmino returns AkashApp's amino codec.
-func (app *AkashApp) LegacyAmino() *codec.LegacyAmino {
+// LegacyAmino returns DICOMPUTEApp's amino codec.
+func (app *DICOMPUTEApp) LegacyAmino() *codec.LegacyAmino {
 	return app.aminoCdc
 }
 
-// AppCodec returns AkashApp's app codec.
-func (app *AkashApp) AppCodec() codec.Codec {
+// AppCodec returns DICOMPUTEApp's app codec.
+func (app *DICOMPUTEApp) AppCodec() codec.Codec {
 	return app.cdc
 }
 
 // TxConfig returns SimApp's TxConfig
-func (app *AkashApp) TxConfig() client.TxConfig {
+func (app *DICOMPUTEApp) TxConfig() client.TxConfig {
 	return app.txConfig
 }
 
 // ModuleAccountAddrs returns all the app's module account addresses.
-func (app *AkashApp) ModuleAccountAddrs() map[string]bool {
+func (app *DICOMPUTEApp) ModuleAccountAddrs() map[string]bool {
 	return ModuleAccountAddrs()
 }
 
 // BlockedAddrs returns all the app's module account addresses that are not
 // allowed to receive external tokens.
-func (app *AkashApp) BlockedAddrs() map[string]bool {
+func (app *DICOMPUTEApp) BlockedAddrs() map[string]bool {
 	perms := ModuleAccountPerms()
 	blockedAddrs := make(map[string]bool)
 	for macc := range perms {
@@ -503,25 +503,25 @@ func (app *AkashApp) BlockedAddrs() map[string]bool {
 	return blockedAddrs
 }
 
-// InterfaceRegistry returns AkashApp's InterfaceRegistry
-func (app *AkashApp) InterfaceRegistry() codectypes.InterfaceRegistry {
+// InterfaceRegistry returns DICOMPUTEApp's InterfaceRegistry
+func (app *DICOMPUTEApp) InterfaceRegistry() codectypes.InterfaceRegistry {
 	return app.interfaceRegistry
 }
 
 // GetSubspace returns a param subspace for a given module name.
-func (app *AkashApp) GetSubspace(moduleName string) paramstypes.Subspace {
+func (app *DICOMPUTEApp) GetSubspace(moduleName string) paramstypes.Subspace {
 	subspace, _ := app.Keepers.Cosmos.Params.GetSubspace(moduleName)
 	return subspace
 }
 
 // SimulationManager implements the SimulationApp interface
-func (app *AkashApp) SimulationManager() *module.SimulationManager {
+func (app *DICOMPUTEApp) SimulationManager() *module.SimulationManager {
 	return app.sm
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
-func (app *AkashApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+func (app *DICOMPUTEApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	cctx := apiSvr.ClientCtx
 
 	// Register new tx routes from grpc-gateway
@@ -535,7 +535,7 @@ func (app *AkashApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIC
 	// Register node gRPC service for grpc-gateway.
 	nodeservice.RegisterGRPCGatewayRoutes(cctx, apiSvr.GRPCGatewayRouter)
 
-	// Register Akash Discovery gRPC-Gateway route for REST access at GET /akash/discovery/v1/info.
+	// Register DICOMPUTE Discovery gRPC-Gateway route for REST access at GET /dicompute/discovery/v1/info.
 	if err := aclient.RegisterDiscoveryHandlerServer(cctx.CmdContext, apiSvr.GRPCGatewayRouter, aclient.NewDiscoveryServer(aclient.GetRegistry())); err != nil {
 		panic(fmt.Errorf("failed to register discovery gRPC-Gateway routes: %w", err))
 	}
@@ -547,12 +547,12 @@ func (app *AkashApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIC
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
-func (app *AkashApp) RegisterTxService(clientCtx client.Context) {
+func (app *DICOMPUTEApp) RegisterTxService(clientCtx client.Context) {
 	authtx.RegisterTxService(app.GRPCQueryRouter(), clientCtx, app.Simulate, app.interfaceRegistry)
 }
 
 // RegisterTendermintService implements the Application.RegisterTendermintService method.
-func (app *AkashApp) RegisterTendermintService(cctx client.Context) {
+func (app *DICOMPUTEApp) RegisterTendermintService(cctx client.Context) {
 	cmtservice.RegisterTendermintService(
 		cctx,
 		app.GRPCQueryRouter(),
@@ -561,19 +561,19 @@ func (app *AkashApp) RegisterTendermintService(cctx client.Context) {
 }
 
 // RegisterNodeService registers the node gRPC Query service.
-func (app *AkashApp) RegisterNodeService(cctx client.Context, cfg config.Config) {
+func (app *DICOMPUTEApp) RegisterNodeService(cctx client.Context, cfg config.Config) {
 	nodeservice.RegisterNodeService(cctx, app.GRPCQueryRouter(), cfg)
 }
 
 // RegisterGRPCServerWithSkipCheckHeader registers all gRPC services including
-// the Akash Discovery service for version negotiation.
-func (app *AkashApp) RegisterGRPCServerWithSkipCheckHeader(server gogogrpc.Server, skipCheckHeader bool) {
+// the DICOMPUTE Discovery service for version negotiation.
+func (app *DICOMPUTEApp) RegisterGRPCServerWithSkipCheckHeader(server gogogrpc.Server, skipCheckHeader bool) {
 	// Register all standard Cosmos SDK module query services.
 	app.BaseApp.RegisterGRPCServerWithSkipCheckHeader(server, skipCheckHeader)
 
-	// Register Akash Discovery service directly on the gRPC server.
-	// This enables version discovery for clients via gRPC at akash.discovery.v1.Discovery/GetInfo
-	// and via REST through gRPC-Gateway at GET /akash/discovery/v1/info.
+	// Register DICOMPUTE Discovery service directly on the gRPC server.
+	// This enables version discovery for clients via gRPC at dicompute.discovery.v1.Discovery/GetInfo
+	// and via REST through gRPC-Gateway at GET /dicompute/discovery/v1/info.
 	aclient.RegisterDiscoveryService(server, aclient.GetRegistry())
 }
 
@@ -589,8 +589,8 @@ func RegisterSwaggerAPI(_ client.Context, rtr *mux.Router) {
 	rtr.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", staticServer))
 }
 
-// LoadHeight method of AkashApp loads baseapp application version with given height
-func (app *AkashApp) LoadHeight(height int64) error {
+// LoadHeight method of DICOMPUTEApp loads baseapp application version with given height
+func (app *DICOMPUTEApp) LoadHeight(height int64) error {
 	return app.LoadVersion(height)
 }
 
@@ -611,7 +611,7 @@ func getReflectionService() *runtimeservices.ReflectionService {
 
 // NewProposalContext returns a context with a branched version of the state
 // that is safe to query during ProcessProposal.
-func (app *AkashApp) NewProposalContext(header tmproto.Header) sdk.Context {
+func (app *DICOMPUTEApp) NewProposalContext(header tmproto.Header) sdk.Context {
 	// use custom query multistore if provided
 	ms := app.CommitMultiStore().CacheMultiStore()
 	ctx := sdk.NewContext(ms, header, false, app.Logger()).

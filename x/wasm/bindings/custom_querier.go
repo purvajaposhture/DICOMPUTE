@@ -9,17 +9,17 @@ import (
 	oraclekeeper "pkg.akt.dev/node/v2/x/oracle/keeper"
 )
 
-// CustomQuerier returns a custom querier for Akash-specific queries from CosmWasm contracts.
-// This enables contracts to query Akash chain state (like oracle module parameters)
+// CustomQuerier returns a custom querier for DICOMPUTE-specific queries from CosmWasm contracts.
+// This enables contracts to query DICOMPUTE chain state (like oracle module parameters)
 // using the custom query mechanism defined in wasmd.
 //
-// The querier handles AkashQuery requests, which are JSON-encoded custom queries
+// The querier handles DICOMPUTEQuery requests, which are JSON-encoded custom queries
 // defined in contracts/*/src/querier.rs.
 func CustomQuerier(oracleKeeper oraclekeeper.Keeper) func(ctx sdk.Context, request json.RawMessage) ([]byte, error) {
 	return func(ctx sdk.Context, request json.RawMessage) ([]byte, error) {
-		var query AkashQuery
+		var query DICOMPUTEQuery
 		if err := json.Unmarshal(request, &query); err != nil {
-			return nil, wasmvmtypes.InvalidRequest{Err: "failed to parse AkashQuery: " + err.Error()}
+			return nil, wasmvmtypes.InvalidRequest{Err: "failed to parse DICOMPUTEQuery: " + err.Error()}
 		}
 
 		switch {
@@ -28,7 +28,7 @@ func CustomQuerier(oracleKeeper oraclekeeper.Keeper) func(ctx sdk.Context, reque
 		//case query.GuardianSet != nil:
 		//	return handleGuardianSetQuery(ctx, oracleKeeper)
 		default:
-			return nil, wasmvmtypes.UnsupportedRequest{Kind: "unknown akash query variant"}
+			return nil, wasmvmtypes.UnsupportedRequest{Kind: "unknown dicompute query variant"}
 		}
 	}
 }
@@ -68,7 +68,7 @@ func CustomQuerier(oracleKeeper oraclekeeper.Keeper) func(ctx sdk.Context, reque
 //	// Extract WormholeContractParams from FeedContractsParams Any slice
 //	var guardianAddresses []GuardianAddress
 //	for _, anyVal := range params.FeedContractsParams {
-//		if anyVal != nil && anyVal.TypeUrl == "/akash.oracle.v1.WormholeContractParams" {
+//		if anyVal != nil && anyVal.TypeUrl == "/dicompute.oracle.v1.WormholeContractParams" {
 //			var wormholeParams oracletypes.WormholeContractParams
 //			if err := wormholeParams.Unmarshal(anyVal.Value); err == nil {
 //				// Convert hex-encoded guardian addresses to base64-encoded Binary
@@ -130,14 +130,14 @@ func CustomQuerier(oracleKeeper oraclekeeper.Keeper) func(ctx sdk.Context, reque
 //			continue
 //		}
 //		switch anyVal.TypeUrl {
-//		case "/akash.oracle.v1.PythContractParams":
+//		case "/dicompute.oracle.v1.PythContractParams":
 //			var pythParams oracletypes.PythContractParams
 //			if err := pythParams.Unmarshal(anyVal.Value); err == nil {
 //				result.PythParams = &PythContractParams{
 //					AktPriceFeedId: pythParams.AktPriceFeedId,
 //				}
 //			}
-//		case "/akash.oracle.v1.WormholeContractParams":
+//		case "/dicompute.oracle.v1.WormholeContractParams":
 //			var wormholeParams oracletypes.WormholeContractParams
 //			if err := wormholeParams.Unmarshal(anyVal.Value); err == nil {
 //				result.WormholeParams = &WormholeContractParams{

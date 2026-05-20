@@ -1,10 +1,10 @@
 package bindings
 
-// AkashQuery represents custom Akash chain queries from CosmWasm contracts.
+// DICOMPUTEQuery represents custom DICOMPUTE chain queries from CosmWasm contracts.
 // This enum must match the Rust definition in contracts/*/src/querier.rs
 //
 // The JSON serialization uses snake_case to match Rust's serde default.
-type AkashQuery struct {
+type DICOMPUTEQuery struct {
 	// OracleParams queries the oracle module parameters
 	OracleParams *OracleParamsQuery `json:"oracle_params,omitempty"`
 	// GuardianSet queries the Wormhole guardian set from oracle params
@@ -43,7 +43,7 @@ type GuardianAddress struct {
 
 // OracleParams represents the oracle module parameters.
 // Must match: contracts/pyth/src/querier.rs::OracleParams
-// and proto: akash.oracle.v1.Params
+// and proto: dicompute.oracle.v1.Params
 type OracleParams struct {
 	// Sources contains addresses allowed to write prices (contract addresses)
 	Sources []string `json:"sources"`
@@ -63,7 +63,7 @@ type OracleParams struct {
 
 // PythContractParams contains configuration for Pyth price feeds.
 // Must match: contracts/pyth/src/querier.rs::PythContractParams
-// and proto: akash.oracle.v1.PythContractParams
+// and proto: dicompute.oracle.v1.PythContractParams
 type PythContractParams struct {
 	// AktPriceFeedId is the Pyth price feed identifier for AKT/USD
 	AktPriceFeedId string `json:"akt_price_feed_id"`
@@ -71,7 +71,7 @@ type PythContractParams struct {
 
 // WormholeContractParams contains configuration for Wormhole guardian set.
 // Must match: contracts/wormhole/src/querier.rs::WormholeContractParams
-// and proto: akash.oracle.v1.WormholeContractParams
+// and proto: dicompute.oracle.v1.WormholeContractParams
 type WormholeContractParams struct {
 	// GuardianAddresses is the list of guardian addresses (20 bytes each, hex encoded)
 	GuardianAddresses []string `json:"guardian_addresses"`

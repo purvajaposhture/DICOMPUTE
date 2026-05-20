@@ -234,7 +234,7 @@ var (
 	sourcesdir     = flag.String("sourcesdir", "", "sources directory")
 	config         = flag.String("config", "", "config file")
 	cosmovisor     = flag.String("cosmovisor", "", "path to cosmovisor")
-	upgradeVersion = flag.String("upgrade-version", "local", "akash release to download. local if it is built locally")
+	upgradeVersion = flag.String("upgrade-version", "local", "dicompute release to download. local if it is built locally")
 	upgradeName    = flag.String("upgrade-name", "", "name of the upgrade")
 	testCasesFile  = flag.String("test-cases", "", "")
 )
@@ -354,12 +354,12 @@ func TestUpgrade(t *testing.T) {
 			upgradeCache = homedir
 		}
 
-		genesisBin := fmt.Sprintf("%s/cosmovisor/genesis/bin/akash", homedir)
+		genesisBin := fmt.Sprintf("%s/cosmovisor/genesis/bin/dicompute", homedir)
 
 		info, err = os.Stat(genesisBin)
 		require.NoError(t, err)
 		require.False(t, info.IsDir(), "value in genesis-binary flag is not a file")
-		require.True(t, isOwnerExecutable(info.Mode()), "akash must be executable file")
+		require.True(t, isOwnerExecutable(info.Mode()), "dicompute must be executable file")
 
 		valCmd := &commander{
 			t:   t,
@@ -406,12 +406,12 @@ func TestUpgrade(t *testing.T) {
 		cmdr.env = append(cmdr.env, fmt.Sprintf("AKASH_OUTPUT=json"))
 
 		if *upgradeVersion == "local" {
-			upgradeBin := fmt.Sprintf("%s/cosmovisor/upgrades/%s/bin/akash", homedir, *upgradeName)
+			upgradeBin := fmt.Sprintf("%s/cosmovisor/upgrades/%s/bin/dicompute", homedir, *upgradeName)
 
 			info, err = os.Stat(upgradeBin)
 			require.NoError(t, err)
 			require.False(t, info.IsDir(), "value in upgrade-binary flag is not a file")
-			require.True(t, isOwnerExecutable(info.Mode()), "akash must be executable file")
+			require.True(t, isOwnerExecutable(info.Mode()), "dicompute must be executable file")
 		}
 
 		res, err := valCmd.execute(ctx, "tendermint show-node-id")
@@ -474,7 +474,7 @@ func TestUpgrade(t *testing.T) {
 				fmt.Sprintf("AKASH_GRPC_ADDRESS=%s:%d", listenAddr, params.grpcPort),
 				fmt.Sprintf("AKASH_GRPC_WEB_ADDRESS=%s:%d", listenAddr, params.grpcWebPort),
 				fmt.Sprintf("AKASH_API_ADDRESS=tcp://%s:%d", listenAddr, params.apiPort),
-				"DAEMON_NAME=akash",
+				"DAEMON_NAME=dicompute",
 				"DAEMON_RESTART_AFTER_UPGRADE=true",
 				"DAEMON_ALLOW_DOWNLOAD_BINARIES=true",
 				"DAEMON_RESTART_DELAY=3s",

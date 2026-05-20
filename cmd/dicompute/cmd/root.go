@@ -20,23 +20,23 @@ import (
 	"pkg.akt.dev/go/sdkutil"
 
 	"pkg.akt.dev/node/v2/app"
-	"pkg.akt.dev/node/v2/cmd/akash/cmd/testnetify"
+	"pkg.akt.dev/node/v2/cmd/dicompute/cmd/testnetify"
 )
 
-// NewRootCmd creates a new root command for akash. It is called once in the
+// NewRootCmd creates a new root command for dicompute. It is called once in the
 // main function.
 func NewRootCmd() (*cobra.Command, sdkutil.EncodingConfig) {
 	encodingConfig := sdkutil.MakeEncodingConfig()
 	app.ModuleBasics().RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	rootCmd := &cobra.Command{
-		Use:   "akash",
-		Short: "Akash Blockchain Application",
-		Long: `Akash CLI Utility.
+		Use:   "dicompute",
+		Short: "DICOMPUTE Blockchain Application",
+		Long: `DICOMPUTE CLI Utility.
 
-Akash is a peer-to-peer marketplace for computing resources and
+DICOMPUTE is a peer-to-peer marketplace for computing resources and
 a deployment platform for heavily distributed applications.
-Find out more at https://akash.network`,
+Find out more at https://dicompute.network`,
 		SilenceUsage:      true,
 		PersistentPreRunE: cli.GetPersistentPreRunE(encodingConfig, []string{"AKASH"}, cli.DefaultHome, cli.WithPreRunAppConfig(InitAppConfig())),
 	}

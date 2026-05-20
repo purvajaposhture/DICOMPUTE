@@ -63,7 +63,7 @@ func (up *upgrade) UpgradeHandler() upgradetypes.UpgradeHandler {
 		msgServer := wasmkeeper.NewMsgServerImpl(up.Keepers.Cosmos.Wasm)
 		govAddr := up.Keepers.Cosmos.Wasm.GetAuthority()
 
-		contractAddr := "akash1nc5tatafv6eyq7llkr2gv50ff9e22mnf70qgjlv737ktmt4eswrqyagled"
+		contractAddr := "dicompute1nc5tatafv6eyq7llkr2gv50ff9e22mnf70qgjlv737ktmt4eswrqyagled"
 
 		_, err = msgServer.StoreAndMigrateContract(ctx, &wasmtypes.MsgStoreAndMigrateContract{
 			Authority:             govAddr,
@@ -80,12 +80,12 @@ func (up *upgrade) UpgradeHandler() upgradetypes.UpgradeHandler {
 		oparams.MinPriceSources = 1
 		// Set the pyth contract as an authorized oracle price source
 		oparams.Sources = []string{contractAddr}
-		err = up.Keepers.Akash.Oracle.SetParams(sctx, oparams)
+		err = up.Keepers.DICOMPUTE.Oracle.SetParams(sctx, oparams)
 		if err != nil {
 			return toVM, err
 		}
 
-		if sctx.ChainID() == "akashnet-2" {
+		if sctx.ChainID() == "dicomputenet-2" {
 			feePool, err := up.Keepers.Cosmos.Distr.FeePool.Get(ctx)
 			if err != nil {
 				return toVM, fmt.Errorf("failed to get fee pool: %w", err)
@@ -107,21 +107,21 @@ func (up *upgrade) UpgradeHandler() upgradetypes.UpgradeHandler {
 			}
 		}
 
-		bparams, err := up.Keepers.Akash.Bme.GetParams(sctx)
+		bparams, err := up.Keepers.DICOMPUTE.Bme.GetParams(sctx)
 		if err != nil {
 			return toVM, fmt.Errorf("failed to get bme params: %w", err)
 		}
 
 		if bparams.MaxPendingAttempts == 0 {
 			bparams.MaxPendingAttempts = 3
-			err = up.Keepers.Akash.Bme.SetParams(sctx, bparams)
+			err = up.Keepers.DICOMPUTE.Bme.SetParams(sctx, bparams)
 			if err != nil {
 				return toVM, fmt.Errorf("failed to set bme params: %w", err)
 			}
 		}
 
 		// Set default reclamation params for market module
-		mparams, err := up.Keepers.Akash.Market.GetParams(sctx)
+		mparams, err := up.Keepers.DICOMPUTE.Market.GetParams(sctx)
 		if err != nil {
 			return toVM, fmt.Errorf("failed to get market params: %w", err)
 		}
@@ -129,7 +129,7 @@ func (up *upgrade) UpgradeHandler() upgradetypes.UpgradeHandler {
 		if mparams.MinReclamationWindow == 0 {
 			mparams.MinReclamationWindow = mvbeta.DefaultMinReclamationWindow
 			mparams.MaxReclamationWindow = mvbeta.DefaultMaxReclamationWindow
-			if err = up.Keepers.Akash.Market.SetParams(sctx, mparams); err != nil {
+			if err = up.Keepers.DICOMPUTE.Market.SetParams(sctx, mparams); err != nil {
 				return toVM, fmt.Errorf("failed to set market params: %w", err)
 			}
 		}

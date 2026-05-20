@@ -36,7 +36,7 @@ func setupTest(t *testing.T) *grpcTestSuite {
 		t:      t,
 		suite:  ssuite,
 		ctx:    ssuite.Context(),
-		keeper: app.Keepers.Akash.Oracle,
+		keeper: app.Keepers.DICOMPUTE.Oracle,
 	}
 
 	querier := suite.keeper.NewQuerier()

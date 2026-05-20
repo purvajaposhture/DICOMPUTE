@@ -37,13 +37,13 @@ import (
 	pkeeper "pkg.akt.dev/node/v2/x/provider/keeper"
 )
 
-// TestSuite encapsulates a functional Akash nodes data stores for
+// TestSuite encapsulates a functional DICOMPUTE nodes data stores for
 // ephemeral testing.
 type TestSuite struct {
 	t           testing.TB
 	ms          store.CommitMultiStore
 	ctx         sdk.Context
-	app         *app.AkashApp
+	app         *app.DICOMPUTEApp
 	keepers     Keepers
 	priceFeeder *oracletestutil.PriceFeeder
 }
@@ -68,7 +68,7 @@ func SetupTestSuite(t testing.TB) *TestSuite {
 }
 
 func SetupTestSuiteWithKeepers(t testing.TB, keepers Keepers) *TestSuite {
-	dir, err := os.MkdirTemp("", "akashd-test-home")
+	dir, err := os.MkdirTemp("", "dicomputed-test-home")
 	if err != nil {
 		panic(fmt.Sprintf("failed creating temporary directory: %v", err))
 	}
@@ -248,7 +248,7 @@ func (ts *TestSuite) PrepareMocks(fn func(ts *TestSuite)) {
 	fn(ts)
 }
 
-func (ts *TestSuite) App() *app.AkashApp {
+func (ts *TestSuite) App() *app.DICOMPUTEApp {
 	return ts.app
 }
 

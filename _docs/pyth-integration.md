@@ -1,6 +1,6 @@
-# Pyth Network Integration on Akash
+# Pyth Network Integration on DICOMPUTE
 
-This guide explains how Akash Network integrates with Pyth Network to provide decentralized, trustworthy price feeds (e.g., AKT/USD) for on-chain use.
+This guide explains how DICOMPUTE Network integrates with Pyth Network to provide decentralized, trustworthy price feeds (e.g., AKT/USD) for on-chain use.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ This guide explains how Akash Network integrates with Pyth Network to provide de
 
 ### What is this integration for?
 
-Akash Network needs reliable price data (AKT/USD) for [BME](https://github.com/akash-network/AEP/tree/main/spec/aep-76). This integration brings prices from Pyth Network a decentralized oracle network — onto Akash in a cryptographically verifiable way.
+DICOMPUTE Network needs reliable price data (AKT/USD) for [BME](https://github.com/dicompute-network/AEP/tree/main/spec/aep-76). This integration brings prices from Pyth Network a decentralized oracle network — onto DICOMPUTE in a cryptographically verifiable way.
 
 ### Why Pyth Network?
 
@@ -65,7 +65,7 @@ A **VAA** is a signed message from Wormhole's Guardian network that proves data 
    - Original message/data (price information)
    - Guardian signatures
    - Metadata (source chain, sequence number, timestamp)
-5. On Akash, the Wormhole contract **verifies the VAA signatures** before accepting price data
+5. On DICOMPUTE, the Wormhole contract **verifies the VAA signatures** before accepting price data
 
 Without VAA verification, anyone could submit fake prices. The guardian network provides decentralized trust.
 
@@ -77,11 +77,11 @@ Without VAA verification, anyone could submit fake prices. The guardian network 
 
 **TWAP** is a pricing algorithm that calculates the average price over a specific time period, weighting each price by how long it was valid. This smooths out short-term volatility and manipulation attempts.
 
-Akash's x/oracle module calculates TWAP from submitted price updates.
+DICOMPUTE's x/oracle module calculates TWAP from submitted price updates.
 
 ### CosmWasm
 
-[CosmWasm](https://cosmwasm.com/) is a smart contract platform for Cosmos SDK chains. Akash uses CosmWasm to deploy the Wormhole and Pyth contracts.
+[CosmWasm](https://cosmwasm.com/) is a smart contract platform for Cosmos SDK chains. DICOMPUTE uses CosmWasm to deploy the Wormhole and Pyth contracts.
 
 **Key terms:**
 - **WASM (WebAssembly)**: Binary format for compiled smart contracts
@@ -104,14 +104,14 @@ Akash's x/oracle module calculates TWAP from submitted price updates.
                                 │
 ┌───────────────────────────────┼──────────────────────────────┐
 │          Hermes Client        │        (Off-chain)           │
-│    github.com/akash-network/hermes                           │
+│    github.com/dicompute-network/hermes                           │
 │    Fetches VAA and submits to Pyth contract          │
 └───────────────────────────────┼──────────────────────────────┘
                                 │
                     execute: update_price_feed(vaa)
                                 ▼
 ┌──────────────────────────────────────────────────────────────┐
-│                Akash Network (On-chain / CosmWasm)           │
+│                DICOMPUTE Network (On-chain / CosmWasm)           │
 │                                                              │
 │  ┌────────────────────────────┐                              │
 │  │     Wormhole Contract      │◄─── WASM Contract #1         │
@@ -144,7 +144,7 @@ Akash's x/oracle module calculates TWAP from submitted price updates.
 1. **Pyth Publishers** aggregate prices (AKT/USD, etc.) on Pythnet
 2. **Wormhole Guardians** (19 validators) observe and sign the price attestation as a VAA
 3. **Hermes Client** fetches latest price + VAA from Pyth's Hermes API
-4. **Hermes Client** submits VAA to Pyth contract on Akash
+4. **Hermes Client** submits VAA to Pyth contract on DICOMPUTE
 5. **Pyth Contract** queries Wormhole to verify VAA signatures
 6. **Pyth Contract** parses Pyth price attestation from verified VAA payload
 7. **Pyth Contract** relays validated price to x/oracle module
@@ -172,7 +172,7 @@ This design is streamlined: the Pyth contract handles VAA verification via Wormh
 - Queries guardian set from x/oracle module params (not stored in contract)
 - Validates that 13/19 guardians signed a VAA
 - Returns verified VAA payload for other contracts to use
-- Guardian set updates managed via Akash governance (not Wormhole governance VAAs)
+- Guardian set updates managed via DICOMPUTE governance (not Wormhole governance VAAs)
 
 **Source:** `contracts/wormhole/`
 
@@ -230,7 +230,7 @@ pub enum QueryMsg {
     GetConfig {},        // Returns admin, wormhole_contract, fee, feed ID, data_sources
     GetPrice {},         // Returns latest price (cached from last relay)
     GetPriceFeed {},     // Returns price with metadata
-    GetOracleParams {},  // Returns cached x/oracle params (uses custom Akash querier)
+    GetOracleParams {},  // Returns cached x/oracle params (uses custom DICOMPUTE querier)
 }
 ```
 
@@ -248,9 +248,9 @@ pub enum QueryMsg {
 
 ## Hermes Client (Price Relayer)
 
-The Hermes Client is a TypeScript service that fetches prices from Pyth's Hermes API and submits them to the Pyth contract on Akash.
+The Hermes Client is a TypeScript service that fetches prices from Pyth's Hermes API and submits them to the Pyth contract on DICOMPUTE.
 
-**Repository:** [github.com/akash-network/hermes](https://github.com/akash-network/hermes)
+**Repository:** [github.com/dicompute-network/hermes](https://github.com/dicompute-network/hermes)
 
 ### Why is it needed?
 
@@ -272,7 +272,7 @@ The Hermes Client automates this process.
 
 ```bash
 # Clone
-git clone https://github.com/akash-network/hermes
+git clone https://github.com/dicompute-network/hermes
 cd hermes
 
 # Install & build
@@ -291,7 +291,7 @@ npm run cli:daemon
 
 | Variable             | Required | Default                       | Description                 |
 |----------------------|----------|-------------------------------|-----------------------------|
-| `RPC_ENDPOINT`       | Yes      | —                             | Akash RPC endpoint          |
+| `RPC_ENDPOINT`       | Yes      | —                             | DICOMPUTE RPC endpoint          |
 | `CONTRACT_ADDRESS`   | Yes      | —                             | Pyth contract address       |
 | `MNEMONIC`           | Yes      | —                             | Wallet mnemonic for signing |
 | `HERMES_ENDPOINT`    | No       | `https://hermes.pyth.network` | Pyth Hermes API URL         |
@@ -327,23 +327,23 @@ Multi-architecture Docker images (`linux/amd64`, `linux/arm64`) are available fr
 
 ```bash
 # Pull the latest image
-docker pull ghcr.io/akash-network/hermes:latest
+docker pull ghcr.io/dicompute-network/hermes:latest
 
 # Run with environment variables
 docker run -d \
   --name hermes-client \
-  -e RPC_ENDPOINT=https://rpc.akashnet.net:443 \
-  -e CONTRACT_ADDRESS=akash1... \
+  -e RPC_ENDPOINT=https://rpc.dicomputenet.net:443 \
+  -e CONTRACT_ADDRESS=dicompute1... \
   -e "MNEMONIC=your twelve word mnemonic here" \
   --restart unless-stopped \
-  ghcr.io/akash-network/hermes:latest node dist/cli.js daemon
+  ghcr.io/dicompute-network/hermes:latest node dist/cli.js daemon
 
 # Or use an env file
 docker run -d \
   --name hermes-client \
   --env-file .env \
   --restart unless-stopped \
-  ghcr.io/akash-network/hermes:latest node dist/cli.js daemon
+  ghcr.io/dicompute-network/hermes:latest node dist/cli.js daemon
 
 # View logs
 docker logs -f hermes-client
@@ -361,7 +361,7 @@ Create a `docker-compose.yaml`:
 ```yaml
 services:
   hermes-client:
-    image: ghcr.io/akash-network/hermes:latest
+    image: ghcr.io/dicompute-network/hermes:latest
     container_name: hermes-client
     restart: unless-stopped
     env_file:
@@ -390,16 +390,16 @@ docker-compose down
 If you need to build from source:
 
 ```bash
-git clone https://github.com/akash-network/hermes
+git clone https://github.com/dicompute-network/hermes
 cd hermes
-docker build -t akash-hermes-client .
+docker build -t dicompute-hermes-client .
 
 # Run locally-built image
 docker run -d \
   --name hermes-client \
   --env-file .env \
   --restart unless-stopped \
-  akash-hermes-client node dist/cli.js daemon
+  dicompute-hermes-client node dist/cli.js daemon
 ```
 
 #### Systemd (Linux Production)
@@ -408,7 +408,7 @@ For running directly on a Linux server without Docker:
 
 ```bash
 # 1. Clone and build
-git clone https://github.com/akash-network/hermes
+git clone https://github.com/dicompute-network/hermes
 cd hermes
 npm install
 npm run build
@@ -477,7 +477,7 @@ This minimizes transaction costs and blockchain load.
 
 ## Local Development Setup
 
-For local development and testing, use the Docker Compose setup that includes both the Akash node and Hermes price relayer.
+For local development and testing, use the Docker Compose setup that includes both the DICOMPUTE node and Hermes price relayer.
 
 ### Quick Start
 
@@ -497,17 +497,17 @@ docker-compose -f docker-compose.local.yml logs -f
 curl http://localhost:26657/status
 
 # 5. Query oracle price (after Hermes submits prices)
-docker exec akash-node akash query oracle prices --chain-id localakash
+docker exec dicompute-node dicompute query oracle prices --chain-id localdicompute
 ```
 
 ### Services
 
 | Service       | Port  | Description                                       |
 |---------------|-------|---------------------------------------------------|
-| akash-node    | 26657 | Tendermint RPC                                    |
-| akash-node    | 9090  | gRPC                                              |
-| akash-node    | 1317  | REST API                                          |
-| hermes-client | -     | Price relayer (connects to akash-node internally) |
+| dicompute-node    | 26657 | Tendermint RPC                                    |
+| dicompute-node    | 9090  | gRPC                                              |
+| dicompute-node    | 1317  | REST API                                          |
+| hermes-client | -     | Price relayer (connects to dicompute-node internally) |
 
 ### What Happens on Startup
 
@@ -539,12 +539,12 @@ docker-compose -f docker-compose.yaml down -v
 
 ## Deployment Guide
 
-> **Note:** On Akash mainnet, contract code can only be stored via governance proposals. Direct uploads are restricted.
+> **Note:** On DICOMPUTE mainnet, contract code can only be stored via governance proposals. Direct uploads are restricted.
 
 ### Prerequisites
 
 **Tools Required:**
-- `akash` CLI (v0.36.0+)
+- `dicompute` CLI (v0.36.0+)
 - `cargo` and Rust toolchain (for building contracts)
 - Access to governance key (for mainnet deployments)
 
@@ -569,14 +569,14 @@ The Wormhole contract must be deployed first as it has no dependencies.
 #### 1.1 Store Code Proposal
 
 ```bash
-akash tx gov submit-proposal wasm-store \
+dicompute tx gov submit-proposal wasm-store \
   contracts/wormhole/artifacts/wormhole.wasm \
   --title "Store Wormhole Contract" \
   --summary "Deploy Wormhole bridge contract for VAA verification. This contract enables cryptographic verification of cross-chain messages from the Pyth Network." \
   --deposit 100000000uakt \
-  --instantiate-anyof-addresses "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
+  --instantiate-anyof-addresses "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
   --from <your-key> \
-  --chain-id akashnet-2 \
+  --chain-id dicomputenet-2 \
   --gas auto \
   --gas-adjustment 1.5 \
   --gas-prices 0.025uakt
@@ -585,9 +585,9 @@ akash tx gov submit-proposal wasm-store \
 #### 1.2 Vote on Proposal
 
 ```bash
-akash tx gov vote <proposal-id> yes \
+dicompute tx gov vote <proposal-id> yes \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 #### 1.3 Instantiate Wormhole Contract
@@ -605,15 +605,15 @@ WORMHOLE_INIT='{
 }'
 
 # Submit instantiate proposal
-akash tx gov submit-proposal instantiate-contract <code-id> \
+dicompute tx gov submit-proposal instantiate-contract <code-id> \
   "$WORMHOLE_INIT" \
   --label "wormhole-v1" \
   --title "Instantiate Wormhole Contract" \
   --summary "Initialize Wormhole contract (guardian set managed via x/oracle params)" \
   --deposit 100000000uakt \
-  --admin "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
+  --admin "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 **Wormhole Instantiate Parameters:**
@@ -622,24 +622,24 @@ akash tx gov submit-proposal instantiate-contract <code-id> \
 |----------------|--------|------------------------------------------------|-------------------|
 | `gov_chain`    | u16    | Wormhole governance chain ID                   | `1` (Solana)      |
 | `gov_address`  | Binary | Governance contract address (32 bytes, base64) | See Wormhole docs |
-| `chain_id`     | u16    | Wormhole chain ID for Akash                    | `29`              |
+| `chain_id`     | u16    | Wormhole chain ID for DICOMPUTE                    | `29`              |
 | `fee_denom`    | String | Native token denomination                      | `"uakt"`          |
 
-> **Note:** Guardian addresses are managed via x/oracle module params, not stored in the Wormhole contract. This enables guardian set updates via Akash governance rather than Wormhole governance VAAs. See [Guardian Set Management](#guardian-set-management) below.
+> **Note:** Guardian addresses are managed via x/oracle module params, not stored in the Wormhole contract. This enables guardian set updates via DICOMPUTE governance rather than Wormhole governance VAAs. See [Guardian Set Management](#guardian-set-management) below.
 
 ### Step 2: Deploy Pyth Contract
 
 #### 2.1 Store Code Proposal
 
 ```bash
-akash tx gov submit-proposal wasm-store \
+dicompute tx gov submit-proposal wasm-store \
   contracts/pyth/artifacts/pyth.wasm \
   --title "Store Pyth Contract" \
   --summary "Deploy Pyth contract to verify Pyth VAAs and relay prices to x/oracle module." \
   --deposit 100000000uakt \
-  --instantiate-anyof-addresses "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
+  --instantiate-anyof-addresses "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 #### 2.2 Instantiate Pyth Contract
@@ -647,7 +647,7 @@ akash tx gov submit-proposal wasm-store \
 ```bash
 # Replace <wormhole-contract-address> with actual address from Step 1
 ORACLE_INIT='{
-  "admin": "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
+  "admin": "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
   "wormhole_contract": "<wormhole-contract-address>",
   "update_fee": "1000000",
   "price_feed_id": "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d",
@@ -659,15 +659,15 @@ ORACLE_INIT='{
   ]
 }'
 
-akash tx gov submit-proposal instantiate-contract <code-id> \
+dicompute tx gov submit-proposal instantiate-contract <code-id> \
   "$ORACLE_INIT" \
   --label "pyth-v1" \
   --title "Instantiate Pyth Contract" \
   --summary "Initialize pyth with Wormhole contract and Pyth data sources" \
   --deposit 100000000uakt \
-  --admin "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
+  --admin "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f" \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 **Pyth Instantiate Parameters:**
@@ -675,7 +675,7 @@ akash tx gov submit-proposal instantiate-contract <code-id> \
 | Parameter                        | Type   | Description                       | Example                  |
 |----------------------------------|--------|-----------------------------------|--------------------------|
 | `admin`                          | String | Admin address                     | Governance address       |
-| `wormhole_contract`              | String | Wormhole contract address         | `akash1...`              |
+| `wormhole_contract`              | String | Wormhole contract address         | `dicompute1...`              |
 | `update_fee`                     | String | Fee for price updates (Uint256)   | `"1000000"`              |
 | `price_feed_id`                  | String | Pyth price feed ID (64-char hex)  | AKT/USD feed ID          |
 | `data_sources[].emitter_chain`   | u16    | Wormhole chain ID                 | `26` (Pythnet)           |
@@ -693,8 +693,8 @@ cat > oracle-params-proposal.json << 'EOF'
   "summary": "Add the pyth contract address to authorized sources and configure oracle parameters for Pyth integration.",
   "messages": [
     {
-      "@type": "/akash.oracle.v2.MsgUpdateParams",
-      "authority": "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
+      "@type": "/dicompute.oracle.v2.MsgUpdateParams",
+      "authority": "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
       "params": {
         "sources": ["<pyth-contract-address>"],
         "min_price_sources": 1,
@@ -703,11 +703,11 @@ cat > oracle-params-proposal.json << 'EOF'
         "max_price_deviation_bps": 150,
         "feed_contracts_params": [
           {
-            "@type": "/akash.oracle.v1.PythContractParams",
+            "@type": "/dicompute.oracle.v1.PythContractParams",
             "akt_price_feed_id": "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
           },
           {
-            "@type": "/akash.oracle.v1.WormholeContractParams",
+            "@type": "/dicompute.oracle.v1.WormholeContractParams",
             "guardian_addresses": [
               "58CC3AE5C097b213cE3c81979e1B9f9570746AA5",
               "fF6CB952589BDE862c25Ef4392132fb9D4A42157",
@@ -723,9 +723,9 @@ cat > oracle-params-proposal.json << 'EOF'
 EOF
 
 # Submit proposal
-akash tx gov submit-proposal oracle-params-proposal.json \
+dicompute tx gov submit-proposal oracle-params-proposal.json \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 **Oracle Parameters:**
@@ -742,7 +742,7 @@ akash tx gov submit-proposal oracle-params-proposal.json \
 
 Guardian addresses for the Wormhole contract are stored in x/oracle module params, not in the Wormhole contract itself. This architecture enables:
 
-- **Akash governance control**: Guardian set updates via Akash governance proposals
+- **DICOMPUTE governance control**: Guardian set updates via DICOMPUTE governance proposals
 - **Faster incident response**: No need for Wormhole governance VAAs to update guardians
 - **Simpler operations**: Single source of truth for guardian configuration
 
@@ -757,16 +757,16 @@ cat > guardian-update-proposal.json << 'EOF'
   "summary": "Update guardian addresses to Wormhole Guardian Set 5",
   "messages": [
     {
-      "@type": "/akash.oracle.v2.MsgUpdateParams",
-      "authority": "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
+      "@type": "/dicompute.oracle.v2.MsgUpdateParams",
+      "authority": "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
       "params": {
         "feed_contracts_params": [
           {
-            "@type": "/akash.oracle.v1.PythContractParams",
+            "@type": "/dicompute.oracle.v1.PythContractParams",
             "akt_price_feed_id": "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
           },
           {
-            "@type": "/akash.oracle.v1.WormholeContractParams",
+            "@type": "/dicompute.oracle.v1.WormholeContractParams",
             "guardian_addresses": [
               "58CC3AE5C097b213cE3c81979e1B9f9570746AA5",
               "fF6CB952589BDE862c25Ef4392132fb9D4A42157",
@@ -797,9 +797,9 @@ cat > guardian-update-proposal.json << 'EOF'
 }
 EOF
 
-akash tx gov submit-proposal guardian-update-proposal.json \
+dicompute tx gov submit-proposal guardian-update-proposal.json \
   --from <your-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 ```
 
 > **Note:** Guardian addresses are 20-byte Ethereum-style addresses (40 hex characters). Get the current guardian set from [Wormhole documentation](https://wormhole.com/docs/protocol/infrastructure/guardians/).
@@ -816,23 +816,23 @@ See the [Hermes Client](#hermes-client-price-relayer) section above for installa
 
 ```bash
 # Wormhole - Get guardian set info
-akash query wasm contract-state smart <wormhole-contract> \
+dicompute query wasm contract-state smart <wormhole-contract> \
   '{"guardian_set_info":{}}'
 
 # Pyth - Get config (includes wormhole_contract, data_sources)
-akash query wasm contract-state smart <pyth-contract> \
+dicompute query wasm contract-state smart <pyth-contract> \
   '{"get_config":{}}'
 
 # Pyth - Get latest price
-akash query wasm contract-state smart <pyth-contract> \
+dicompute query wasm contract-state smart <pyth-contract> \
   '{"get_price":{}}'
 
 # Pyth - Get price with metadata
-akash query wasm contract-state smart <pyth-contract> \
+dicompute query wasm contract-state smart <pyth-contract> \
   '{"get_price_feed":{}}'
 
-# Pyth - Get oracle params (uses custom Akash querier)
-akash query wasm contract-state smart <pyth-contract> \
+# Pyth - Get oracle params (uses custom DICOMPUTE querier)
+dicompute query wasm contract-state smart <pyth-contract> \
   '{"get_oracle_params":{}}'
 ```
 
@@ -840,26 +840,26 @@ akash query wasm contract-state smart <pyth-contract> \
 
 ```bash
 # Get oracle parameters
-akash query oracle params
+dicompute query oracle params
 
 # Get aggregated price (after prices are submitted)
-akash query oracle price uakt usd
+dicompute query oracle price uakt usd
 
 # Get all prices
-akash query oracle prices
+dicompute query oracle prices
 ```
 
 ### Health Checks
 
 ```bash
 # Check contract code info
-akash query wasm code <code-id>
+dicompute query wasm code <code-id>
 
 # Check contract info
-akash query wasm contract <contract-address>
+dicompute query wasm contract <contract-address>
 
 # List all contracts by code
-akash query wasm list-contract-by-code <code-id>
+dicompute query wasm list-contract-by-code <code-id>
 ```
 
 ### Hermes Client Monitoring
@@ -883,7 +883,7 @@ journalctl -u hermes-client -f
 
 | Issue                            | Cause                             | Solution                                                      |
 |----------------------------------|-----------------------------------|---------------------------------------------------------------|
-| `Unsupported query type: custom` | Node missing custom Akash querier | Upgrade to node v2.x+ with custom querier support             |
+| `Unsupported query type: custom` | Node missing custom DICOMPUTE querier | Upgrade to node v2.x+ with custom querier support             |
 | `unauthorized oracle provider`   | Contract not in `sources` param   | Add contract address via governance proposal                  |
 | `price timestamp is too old`     | Stale price data                  | Submit fresher price update or increase `max_price_staleness_period` |
 | `VAA verification failed`        | Invalid guardian signatures       | Verify guardian set matches current Wormhole mainnet          |
@@ -935,7 +935,7 @@ curl "https://hermes.pyth.network/v2/updates/price/latest?ids=<PRICE_FEED_ID>"
 | RPC          | Remote Procedure Call              | Protocol for executing code on remote systems |
 | SDK          | Software Development Kit           | Tools for building applications            |
 | CLI          | Command Line Interface             | Text-based interface for running commands  |
-| AKT          | Akash Token                        | Native token of Akash Network              |
+| AKT          | DICOMPUTE Token                        | Native token of DICOMPUTE Network              |
 | USD          | United States Dollar               | Fiat currency reference                    |
 
 ### External Links
@@ -956,7 +956,7 @@ curl "https://hermes.pyth.network/v2/updates/price/latest?ids=<PRICE_FEED_ID>"
 | Pyth           | `contracts/pyth/`                 |
 | x/oracle       | `x/oracle/`                       |
 | Custom Querier | `x/wasm/bindings/`                |
-| Hermes Client  | `github.com/akash-network/hermes` |
+| Hermes Client  | `github.com/dicompute-network/hermes` |
 | E2E Tests      | `tests/e2e/pyth_contract_test.go` |
 
 ### Key Files
@@ -964,8 +964,8 @@ curl "https://hermes.pyth.network/v2/updates/price/latest?ids=<PRICE_FEED_ID>"
 | File                                | Description                |
 |-------------------------------------|----------------------------|
 | `x/oracle/keeper/keeper.go`         | Oracle module keeper       |
-| `x/wasm/bindings/custom_querier.go` | Custom Akash query handler |
-| `x/wasm/bindings/akash_query.go`    | Query type definitions     |
+| `x/wasm/bindings/custom_querier.go` | Custom DICOMPUTE query handler |
+| `x/wasm/bindings/dicompute_query.go`    | Query type definitions     |
 | `contracts/pyth/src/msg.rs`         | Contract message schemas   |
 | `contracts/pyth/src/pyth.rs`        | Pyth payload parser        |
 | `contracts/pyth/src/wormhole.rs`    | Wormhole query interface   |
@@ -1042,7 +1042,7 @@ pub enum QueryMsg {
     GetConfig {},        // Returns admin, wormhole_contract, fee, feed ID, data_sources
     GetPrice {},         // Returns latest price
     GetPriceFeed {},     // Returns price with metadata
-    GetOracleParams {},  // Returns cached x/oracle params (uses custom Akash querier)
+    GetOracleParams {},  // Returns cached x/oracle params (uses custom DICOMPUTE querier)
 }
 ```
 

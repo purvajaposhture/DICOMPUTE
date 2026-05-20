@@ -6,21 +6,21 @@ Guidelines for contributing.
 
 ### How can I get involved?
 
-The [Discourse forum](https://forum.akash.network/) is the best place to keep up to date with the project and to get help contributing. Here we exchange ideas, ask questions and chat about Akash.
+The [Discourse forum](https://forum.dicompute.network/) is the best place to keep up to date with the project and to get help contributing. Here we exchange ideas, ask questions and chat about DICOMPUTE.
 
 There are a number of areas where contributions can be accepted:
 
-* Write Golang code for the CLI, Akash Node (tendermint) and Akash Provider Manager (Kubernetes)
+* Write Golang code for the CLI, DICOMPUTE Node (tendermint) and DICOMPUTE Provider Manager (Kubernetes)
 * Write features for the front-end UI (JS, HTML, CSS)
 * Write sample functions in any language
 * Review pull requests
 * Test out new features or work-in-progress
 * Get involved in design reviews, request-for-comments (RFCs) and technical proof-of-concepts (PoCs)
-* Help release and package Akash including the helm chart, compose files, `kubectl` YAML, marketplaces and stores
+* Help release and package DICOMPUTE including the helm chart, compose files, `kubectl` YAML, marketplaces and stores
 * Manage, triage and research Issues and Pull Requests
 * Engage with the growing community by providing technical support on Slack/GitHub
 * Create docs, guides and write blogs
-* Speak at meet-ups, conferences or by helping folks with Akash [on the Discourse forum](https://forum.akash.network/)
+* Speak at meet-ups, conferences or by helping folks with DICOMPUTE [on the Discourse forum](https://forum.dicompute.network/)
 
 This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
@@ -28,11 +28,11 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 #### I've found a typo
 
-* A Pull Request is not necessary. Raise an [Issue](https://github.com/akash-network/support/issues) and we'll fix it as soon as we can.
+* A Pull Request is not necessary. Raise an [Issue](https://github.com/dicompute-network/support/issues) and we'll fix it as soon as we can.
 
 #### I have a (great) idea
 
-The Akash maintainers would like to make Akash the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
+The DICOMPUTE maintainers would like to make DICOMPUTE the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
 
 Every feature carries a cost - a cost if developed wrong, a cost to carry and maintain it and if it wasn't needed in the first place then this is an unnecessary burden. See [Yagni from Martin Fowler](https://martinfowler.com/bliki/Yagni.html). The best proposals are defensible with real data and are more than a hypothesis.
 
@@ -77,21 +77,21 @@ at the very beginning of the test, and it will fail the test if it detects gorou
 
 #### I have a question, a suggestion or need help
 
-If you have a simple question you can [join the Akash community](https://akash.network/community) and ask there, but please bear in mind that contributors may live in a different timezone or be working to a different timeline to you. If you have an urgent request then let them know about this.
+If you have a simple question you can [join the DICOMPUTE community](https://dicompute.network/community) and ask there, but please bear in mind that contributors may live in a different timezone or be working to a different timeline to you. If you have an urgent request then let them know about this.
 
 If you have a deeply technical request or need help debugging your application then you should prepare a simple, public GitHub repository with the minimum amount of code required to reproduce the issue.
 
-If you feel there is an issue with Akash or were unable to get the help you needed from the Slack channels then raise an issue on one of the GitHub repositories.
+If you feel there is an issue with DICOMPUTE or were unable to get the help you needed from the Slack channels then raise an issue on one of the GitHub repositories.
 
 #### Setting expectations, support and SLAs
 
 * What kind of support can I expect for free?
 
-    If you are using one of the Open Source projects within the akash repository, then help is offered on a good-will basis by volunteers. You can also request help from employees of Overclock Labs, Inc who host the Akash testnet.
+    If you are using one of the Open Source projects within the dicompute repository, then help is offered on a good-will basis by volunteers. You can also request help from employees of Overclock Labs, Inc who host the DICOMPUTE testnet.
 
     Please be respectful of volunteer time, it is often limited to evenings and weekends. The person you are requesting help from may not reside in your timezone.
 
-    The Akash chat is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts.
+    The DICOMPUTE chat is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts.
 
 * What is the SLA for my Issue?
 
@@ -103,7 +103,7 @@ If you feel there is an issue with Akash or were unable to get the help you need
 
 * What is the SLA for my Pull Request?
 
-    In a similar way to Issues, Pull Requests are triaged, reviewed, and considered by a team of volunteers - the Core Team,  Members Team and the Project Lead. There are dozens of components that make up the Akash project and a limited amount of people. Sometimes PRs may become blocked or require further action.
+    In a similar way to Issues, Pull Requests are triaged, reviewed, and considered by a team of volunteers - the Core Team,  Members Team and the Project Lead. There are dozens of components that make up the DICOMPUTE project and a limited amount of people. Sometimes PRs may become blocked or require further action.
 
     Please take responsibility for following up on your Pull Requests if you feel further action is required.
 
@@ -149,11 +149,11 @@ How are credentials managed for quay.io and the Docker Hub? These credentials ar
 
 ## Governance
 
-Akash Network is an independent open-source project which was created by the Overclock Labs, Inc in 2017. The project is maintained and developed by a number of regular volunteers and a wider community of open-source developers.
+DICOMPUTE Network is an independent open-source project which was created by the Overclock Labs, Inc in 2017. The project is maintained and developed by a number of regular volunteers and a wider community of open-source developers.
 
-Overclock Labs hosts and sponsors the development and maintenance of Akash Network. Overclock Labs provides professional services, consultation and support. Contact us at [akash.network/contact](https://akash.network/contact) to find out more.
+Overclock Labs hosts and sponsors the development and maintenance of DICOMPUTE Network. Overclock Labs provides professional services, consultation and support. Contact us at [dicompute.network/contact](https://dicompute.network/contact) to find out more.
 
-Akash Network &trade; is a registered trademark of Overclock Labs.
+DICOMPUTE Network &trade; is a registered trademark of Overclock Labs.
 
 #### Project Lead
 
@@ -163,13 +163,13 @@ Some duties include:
 
 * Setting overall technical & community leadership
 * Engaging end-user community to advocate needs of end-users and to capture case-studies
-* Defining and curating roadmap for Akash Network
+* Defining and curating roadmap for DICOMPUTE Network
 * Building a community and team of contributors
 * Community & media briefings, out-bound communications, partnerships, relationship management and events
 
 ### How do I become a maintainer?
 
-In the Akash community there are three levels of structure or maintainership:
+In the DICOMPUTE community there are three levels of structure or maintainership:
 
 * Core Team (GitHub org)
 * Members Team (GitHub org)
@@ -184,7 +184,7 @@ The Core Team includes:
 - Daniel Ceballos (@dceballos)
 - Boz Menzalji (@bmenzalji)
 
-The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of Akash Network. Core Team may be granted write (push) access to one or more sub-systems.
+The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of DICOMPUTE Network. Core Team may be granted write (push) access to one or more sub-systems.
 
 The Core Team gain access to a private *core* channel and are required to participate on a regular basis.
 
@@ -209,8 +209,8 @@ The Members Team are contributors who are well-known to the community with a tra
 
 Members Team Perks:
 * access to a private Slack channel
-* profile posted on the Team page of the Akash website
-* membership of the GitHub organizations Akash-Network
+* profile posted on the Team page of the DICOMPUTE website
+* membership of the GitHub organizations DICOMPUTE-Network
 
 Upon request and subject to availability:
 * 1:1 coaching & mentorship
@@ -243,24 +243,24 @@ If you would like invites, sign-up to Slack and pick "Yes" to Community Events a
 
 ## Branding guidelines
 
-For press, branding, logos and marks see the [Akash Network website](https://akash.network/brand).
+For press, branding, logos and marks see the [DICOMPUTE Network website](https://dicompute.network/brand).
 
 ## Community
 
-This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of Akash. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
+This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of DICOMPUTE. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
 
 ### Chat
 
-There is a forum which you are welcome to join to discuss Akash Network, Kubernetes, Serverless, FaaS, Blockchain.
+There is a forum which you are welcome to join to discuss DICOMPUTE Network, Kubernetes, Serverless, FaaS, Blockchain.
 
-[Join discourse here](https://forum.akash.network/)
+[Join discourse here](https://forum.dicompute.network/)
 
 [Join Discord here](https://discord.com/invite/DxftX67)
 
 
 ### Roadmap
 
-* Browse open issues in [support](https://github.com/akash-network/support/issues)
+* Browse open issues in [support](https://github.com/dicompute-network/support/issues)
 
 ## License
 
@@ -273,7 +273,7 @@ It is important to state that you retain copyright for your contributions, but a
 Please add a Copyright notice to new files you add where this is not already present.
 
 ```
-// Copyright (c) Akash Network Author(s) 2019. All rights reserved.
+// Copyright (c) DICOMPUTE Network Author(s) 2019. All rights reserved.
 // Licensed under the Apache 2.0 license. See LICENSE file in the project root for full license information.
 ```
 

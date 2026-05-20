@@ -383,7 +383,7 @@ func (s *marketIntegrationTestSuite) Test2CreateBid() {
 		cctx,
 		cli.TestFlags().
 			WithOutputJSON().
-			WithOwner("akash102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt")...,
+			WithOwner("dicompute102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt")...,
 	)
 	s.Require().Error(err)
 
@@ -499,7 +499,7 @@ func (s *marketIntegrationTestSuite) Test3QueryLeasesAndCloseBid() {
 		ctx,
 		cctx,
 		cli.TestFlags().
-			WithOwner("akash102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt").
+			WithOwner("dicompute102ruvpv2srmunfffxavttxnhezln6fnc3pf7tt").
 			WithOutputJSON()...,
 	)
 	s.Require().Error(err)

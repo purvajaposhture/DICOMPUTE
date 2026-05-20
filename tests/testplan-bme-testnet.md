@@ -2,7 +2,7 @@
 
 ## Overview
 
-This testplan covers the BME module functionality for testnet validation. The BME module manages the conversion between AKT (Akash Token) and ACT (Akash Compute Token) using a vault system with collateral ratio-based circuit breaker mechanisms.
+This testplan covers the BME module functionality for testnet validation. The BME module manages the conversion between AKT (DICOMPUTE Token) and ACT (DICOMPUTE Compute Token) using a vault system with collateral ratio-based circuit breaker mechanisms.
 
 ## Module Summary
 
@@ -21,7 +21,7 @@ This testplan covers the BME module functionality for testnet validation. The BM
 - [ ] Testnet node running with BME module enabled
 - [ ] Oracle module configured with AKT and ACT price feeds
 - [ ] Test accounts with sufficient AKT balance
-- [ ] Access to CLI (`akash`) or REST/gRPC endpoints
+- [ ] Access to CLI (`dicompute`) or REST/gRPC endpoints
 - [ ] Price feeder running and submitting prices
 
 ### Required Configuration
@@ -45,11 +45,11 @@ This testplan covers the BME module functionality for testnet validation. The BM
 **Steps**:
 1. Query BME parameters via CLI:
    ```bash
-   akash query bme params --output json
+   dicompute query bme params --output json
    ```
 2. Query via REST:
    ```bash
-   curl -s $NODE_API/akash/bme/v1/params
+   curl -s $NODE_API/dicompute/bme/v1/params
    ```
 
 **Expected Results**:
@@ -66,11 +66,11 @@ This testplan covers the BME module functionality for testnet validation. The BM
 **Steps**:
 1. Query vault state via CLI:
    ```bash
-   akash query bme vault-state --output json
+   dicompute query bme vault-state --output json
    ```
 2. Query via REST:
    ```bash
-   curl -s $NODE_API/akash/bme/v1/vault-state
+   curl -s $NODE_API/dicompute/bme/v1/vault-state
    ```
 
 **Expected Results**:
@@ -88,11 +88,11 @@ This testplan covers the BME module functionality for testnet validation. The BM
 **Steps**:
 1. Query collateral ratio via CLI:
    ```bash
-   akash query bme collateral-ratio --output json
+   dicompute query bme collateral-ratio --output json
    ```
 2. Query via REST:
    ```bash
-   curl -s $NODE_API/akash/bme/v1/collateral-ratio
+   curl -s $NODE_API/dicompute/bme/v1/collateral-ratio
    ```
 
 **Expected Results**:
@@ -109,11 +109,11 @@ This testplan covers the BME module functionality for testnet validation. The BM
 **Steps**:
 1. Query circuit breaker status via CLI:
    ```bash
-   akash query bme circuit-breaker-status --output json
+   dicompute query bme circuit-breaker-status --output json
    ```
 2. Query via REST:
    ```bash
-   curl -s $NODE_API/akash/bme/v1/circuit-breaker-status
+   curl -s $NODE_API/dicompute/bme/v1/circuit-breaker-status
    ```
 
 **Expected Results**:
@@ -133,11 +133,11 @@ This testplan covers the BME module functionality for testnet validation. The BM
 **Steps**:
 1. Query AKT price:
    ```bash
-   akash query oracle price uakt --output json
+   dicompute query oracle price uakt --output json
    ```
 2. Query ACT price:
    ```bash
-   akash query oracle price uact --output json
+   dicompute query oracle price uact --output json
    ```
 
 **Expected Results**:
@@ -179,7 +179,7 @@ This testplan covers the BME module functionality for testnet validation. The BM
 2. Record initial account balances
 3. Create a deployment with AKT deposit:
    ```bash
-   akash tx deployment create deployment.yaml --from $ACCOUNT --deposit 100000uakt
+   dicompute tx deployment create deployment.yaml --from $ACCOUNT --deposit 100000uakt
    ```
 4. Query vault state after deposit
 5. Verify ACT was minted
@@ -228,7 +228,7 @@ This testplan covers the BME module functionality for testnet validation. The BM
 2. Record owner AKT balance
 3. Close deployment:
    ```bash
-   akash tx deployment close --dseq $DSEQ --from $ACCOUNT
+   dicompute tx deployment close --dseq $DSEQ --from $ACCOUNT
    ```
 4. Query vault state after close
 5. Verify owner received AKT refund
@@ -452,25 +452,25 @@ During testnet testing, monitor:
 
 ```bash
 # Query BME parameters
-akash query bme params
+dicompute query bme params
 
 # Query vault state
-akash query bme vault-state
+dicompute query bme vault-state
 
 # Query collateral ratio
-akash query bme collateral-ratio
+dicompute query bme collateral-ratio
 
 # Query circuit breaker status
-akash query bme circuit-breaker-status
+dicompute query bme circuit-breaker-status
 ```
 
 ### REST Endpoints
 
 ```
-GET /akash/bme/v1/params
-GET /akash/bme/v1/vault-state
-GET /akash/bme/v1/collateral-ratio
-GET /akash/bme/v1/circuit-breaker-status
+GET /dicompute/bme/v1/params
+GET /dicompute/bme/v1/vault-state
+GET /dicompute/bme/v1/collateral-ratio
+GET /dicompute/bme/v1/circuit-breaker-status
 ```
 
 ---

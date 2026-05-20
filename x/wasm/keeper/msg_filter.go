@@ -106,7 +106,7 @@ func (k *keeper) FilterMessage(sctx sdk.Context, contractAddr sdk.AccAddress, ms
 		)
 	}
 
-	// BLOCK Custom messages (no Akash bindings)
+	// BLOCK Custom messages (no DICOMPUTE bindings)
 	if msg.Custom != nil {
 		return errorsmod.Wrap(
 			sdkerrors.ErrUnauthorized,
@@ -168,7 +168,7 @@ func (k *keeper) filterBankMessage(sctx sdk.Context, msg *wasmvmtypes.BankMsg) e
 // Only MsgAddPriceEntry from authorized oracle sources is allowed
 func (k *keeper) filterAnyMessage(sctx sdk.Context, contractAddr sdk.AccAddress, msg *wasmvmtypes.AnyMsg) error {
 	// Only allow MsgAddPriceEntry from oracle module
-	if msg.TypeURL != "/akash.oracle.v2.MsgAddPriceEntry" {
+	if msg.TypeURL != "/dicompute.oracle.v2.MsgAddPriceEntry" {
 		return errorsmod.Wrapf(
 			sdkerrors.ErrUnauthorized,
 			"Any message type %s not allowed",

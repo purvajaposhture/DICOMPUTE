@@ -36,7 +36,7 @@ import (
 	awasm "pkg.akt.dev/node/v2/x/wasm"
 )
 
-func akashModuleBasics() []module.AppModuleBasic {
+func dicomputeModuleBasics() []module.AppModuleBasic {
 	return []module.AppModuleBasic{
 		epochs.AppModuleBasic{},
 		escrow.AppModuleBasic{},

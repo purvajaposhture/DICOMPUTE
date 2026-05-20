@@ -5,12 +5,12 @@ import (
 	"os"
 
 	"github.com/spf13/cobra/doc"
-	root "pkg.akt.dev/node/v2/cmd/akash/cmd"
+	root "pkg.akt.dev/node/v2/cmd/dicompute/cmd"
 )
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Fprint(os.Stderr, "Usage is:\n\takash_docgen <output path>\n")
+		fmt.Fprint(os.Stderr, "Usage is:\n\tdicompute_docgen <output path>\n")
 		os.Exit(1)
 	}
 	outputPath := os.Args[1]

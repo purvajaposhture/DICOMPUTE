@@ -1,7 +1,7 @@
 # Contract Governance Updates
 
 Both the Wormhole and Pyth contracts are instantiated with the governance module address
-(`akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f`) as their admin. This document describes
+(`dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f`) as their admin. This document describes
 how to update contract parameters post-deployment.
 
 ## Updating Pyth Price Feed ID
@@ -14,7 +14,7 @@ governance proposal that executes `UpdateConfig` on the contract:
   "messages": [
     {
       "@type": "/cosmwasm.wasm.v1.MsgExecuteContract",
-      "sender": "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
+      "sender": "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
       "contract": "<pyth-contract-address>",
       "msg": "{\"update_config\":{\"price_feed_id\":\"0x<new-feed-id>\"}}",
       "funds": []
@@ -31,12 +31,12 @@ to update those values in the same proposal.
 
 ```bash
 # Submit the proposal
-akash tx gov submit-proposal update-feed-id.json \
+dicompute tx gov submit-proposal update-feed-id.json \
   --from <proposer-key> \
-  --chain-id akashnet-2
+  --chain-id dicomputenet-2
 
 # Vote
-akash tx gov vote <proposal-id> yes --from <validator-key>
+dicompute tx gov vote <proposal-id> yes --from <validator-key>
 ```
 
 ## Updating Wormhole Guardian Set
@@ -45,10 +45,10 @@ The Wormhole contract stores guardian sets internally. Updates happen via **Worm
 VAAs** — messages signed by 2/3+1 of the current guardian set that contain the new guardian
 addresses (action type 2).
 
-Any account can submit a valid governance VAA; no Akash governance proposal is required:
+Any account can submit a valid governance VAA; no DICOMPUTE governance proposal is required:
 
 ```bash
-akash tx wasm execute <wormhole-contract-address> \
+dicompute tx wasm execute <wormhole-contract-address> \
   '{"submit_vaa":{"vaa":"<base64-encoded-governance-vaa>"}}' \
   --from <any-key>
 ```
@@ -67,7 +67,7 @@ guardian sets as a last resort (e.g., if the current guardian set is compromised
   "messages": [
     {
       "@type": "/cosmwasm.wasm.v1.MsgMigrateContract",
-      "sender": "akash10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
+      "sender": "dicompute10d07y265gmmuvt4z0w9aw880jnsr700jhe7z0f",
       "contract": "<wormhole-contract-address>",
       "code_id": "<new-code-id>",
       "msg": "{}"

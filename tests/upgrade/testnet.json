@@ -1,5 +1,5 @@
 {
-    "chain_id": "localakash",
+    "chain_id": "localdicompute",
     "gov": {
         "voting_params": {
             "voting_period": "60s",
@@ -8,7 +8,7 @@
     },
     "accounts": [
         {
-            "address": "akash1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
+            "address": "dicompute1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
             "balances": [
                 {
                     "denom": "uakt",
@@ -21,7 +21,7 @@
             ]
         },
         {
-            "address": "akash18tdthhtcvfmzl60r0r6gvjdcelc0wtwfumqsdz",
+            "address": "dicompute18tdthhtcvfmzl60r0r6gvjdcelc0wtwfumqsdz",
             "balances": [
                 {
                     "denom": "uakt",
@@ -34,7 +34,7 @@
             ]
         },
         {
-            "address": "akash1sdv7sz7y4j2z9l6nyrk9g4ztjh9dvml75gfgra",
+            "address": "dicompute1sdv7sz7y4j2z9l6nyrk9g4ztjh9dvml75gfgra",
             "balances": [
                 {
                     "denom": "uakt",
@@ -47,7 +47,7 @@
             ]
         },
         {
-            "address": "akash1kwngmq9s7mfs6x7aes5t0jcm5yvmd7367jm3ke",
+            "address": "dicompute1kwngmq9s7mfs6x7aes5t0jcm5yvmd7367jm3ke",
             "balances": [
                 {
                     "denom": "uakt",
@@ -59,9 +59,9 @@
     "validators": [
         {
             "moniker": "upgrade-tester-1",
-            "operator": "akash1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
+            "operator": "dicompute1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
             "status": 3,
-            "home": ".akash0",
+            "home": ".dicompute0",
             "commission": {
                 "rate": "0.05",
                 "maxRate": "0.8",
@@ -70,7 +70,7 @@
             "min_self_delegation": "1",
             "delegations": [
                 {
-                    "address": "akash1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
+                    "address": "dicompute1dge0lcc5rqxkw52rgav4q0fyhx7arcufmrkyww",
                     "amount": {
                         "denom": "uakt",
                         "amount": "900000000000000"

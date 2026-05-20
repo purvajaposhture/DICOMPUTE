@@ -47,7 +47,7 @@ import (
 )
 
 func appModules(
-	app *AkashApp,
+	app *DICOMPUTEApp,
 	encodingConfig sdkutil.EncodingConfig,
 ) []module.AppModule {
 	cdc := encodingConfig.Codec
@@ -86,7 +86,7 @@ func appModules(
 			cdc,
 			app.Keepers.Cosmos.Mint,
 			app.Keepers.Cosmos.Acct,
-			nil, // todo akash-network/support#4
+			nil, // todo dicompute-network/support#4
 			app.GetSubspace(minttypes.ModuleName),
 		),
 		slashing.NewAppModule(
@@ -151,60 +151,60 @@ func appModules(
 		),
 		escrow.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Escrow,
+			app.Keepers.DICOMPUTE.Escrow,
 			app.Keepers.Cosmos.Authz,
 			app.Keepers.Cosmos.Bank,
-			app.Keepers.Akash.Oracle,
+			app.Keepers.DICOMPUTE.Oracle,
 		),
 		deployment.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Deployment,
-			app.Keepers.Akash.Market,
-			app.Keepers.Akash.Escrow,
-			app.Keepers.Akash.Bme,
+			app.Keepers.DICOMPUTE.Deployment,
+			app.Keepers.DICOMPUTE.Market,
+			app.Keepers.DICOMPUTE.Escrow,
+			app.Keepers.DICOMPUTE.Bme,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
 		),
 		market.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Market,
-			app.Keepers.Akash.Escrow,
-			app.Keepers.Akash.Audit,
-			app.Keepers.Akash.Deployment,
-			app.Keepers.Akash.Provider,
+			app.Keepers.DICOMPUTE.Market,
+			app.Keepers.DICOMPUTE.Escrow,
+			app.Keepers.DICOMPUTE.Audit,
+			app.Keepers.DICOMPUTE.Deployment,
+			app.Keepers.DICOMPUTE.Provider,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Authz,
 			app.Keepers.Cosmos.Bank,
 		),
 		provider.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Provider,
+			app.Keepers.DICOMPUTE.Provider,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
-			app.Keepers.Akash.Market,
+			app.Keepers.DICOMPUTE.Market,
 		),
 		audit.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Audit,
+			app.Keepers.DICOMPUTE.Audit,
 		),
 		cert.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Cert,
+			app.Keepers.DICOMPUTE.Cert,
 		),
 		awasm.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Wasm,
+			app.Keepers.DICOMPUTE.Wasm,
 		),
 		epochs.NewAppModule(
-			app.Keepers.Akash.Epochs,
+			app.Keepers.DICOMPUTE.Epochs,
 		),
 		oracle.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Oracle,
+			app.Keepers.DICOMPUTE.Oracle,
 		),
 		bme.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Bme,
+			app.Keepers.DICOMPUTE.Bme,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
 		),
@@ -221,7 +221,7 @@ func appModules(
 }
 
 func appSimModules(
-	app *AkashApp,
+	app *DICOMPUTEApp,
 	encodingConfig sdkutil.EncodingConfig,
 ) []module.AppModuleSimulation {
 	return []module.AppModuleSimulation{
@@ -269,7 +269,7 @@ func appSimModules(
 			app.cdc,
 			app.Keepers.Cosmos.Mint,
 			app.Keepers.Cosmos.Acct,
-			nil, // todo akash-network/support#4
+			nil, // todo dicompute-network/support#4
 			app.GetSubspace(minttypes.ModuleName),
 		),
 		staking.NewAppModule(
@@ -308,54 +308,54 @@ func appSimModules(
 		transfer.NewAppModule(
 			app.Keepers.Cosmos.Transfer,
 		),
-		// akash sim modules
+		// dicompute sim modules
 		deployment.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Deployment,
-			app.Keepers.Akash.Market,
-			app.Keepers.Akash.Escrow,
-			app.Keepers.Akash.Bme,
+			app.Keepers.DICOMPUTE.Deployment,
+			app.Keepers.DICOMPUTE.Market,
+			app.Keepers.DICOMPUTE.Escrow,
+			app.Keepers.DICOMPUTE.Bme,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
 		),
 		market.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Market,
-			app.Keepers.Akash.Escrow,
-			app.Keepers.Akash.Audit,
-			app.Keepers.Akash.Deployment,
-			app.Keepers.Akash.Provider,
+			app.Keepers.DICOMPUTE.Market,
+			app.Keepers.DICOMPUTE.Escrow,
+			app.Keepers.DICOMPUTE.Audit,
+			app.Keepers.DICOMPUTE.Deployment,
+			app.Keepers.DICOMPUTE.Provider,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Authz,
 			app.Keepers.Cosmos.Bank,
 		),
 		provider.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Provider,
+			app.Keepers.DICOMPUTE.Provider,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
-			app.Keepers.Akash.Market,
+			app.Keepers.DICOMPUTE.Market,
 		),
 		cert.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Cert,
+			app.Keepers.DICOMPUTE.Cert,
 		),
 		epochs.NewAppModule(
-			app.Keepers.Akash.Epochs,
+			app.Keepers.DICOMPUTE.Epochs,
 		),
 		oracle.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Oracle,
+			app.Keepers.DICOMPUTE.Oracle,
 		),
 		bme.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Bme,
+			app.Keepers.DICOMPUTE.Bme,
 			app.Keepers.Cosmos.Acct,
 			app.Keepers.Cosmos.Bank,
 		),
 		awasm.NewAppModule(
 			app.cdc,
-			app.Keepers.Akash.Wasm,
+			app.Keepers.DICOMPUTE.Wasm,
 		),
 		wasm.NewAppModule(
 			app.cdc,

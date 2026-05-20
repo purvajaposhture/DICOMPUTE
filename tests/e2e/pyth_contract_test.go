@@ -363,7 +363,7 @@ func (s *priceOracleContractTestSuite) TestWormholeContractMessageEncoding() {
 	s.Require().Equal(`{"get_state":{}}`, string(data))
 
 	queryMsg = WormholeQueryMsg{
-		QueryAddressHex: &QueryAddressHexMsg{Address: "akash1test123"},
+		QueryAddressHex: &QueryAddressHexMsg{Address: "dicompute1test123"},
 	}
 
 	data, err = json.Marshal(queryMsg)
@@ -377,8 +377,8 @@ func (s *priceOracleContractTestSuite) TestPriceOracleWithVAAMessageEncoding() {
 	pythEmitterAddr := "e101faedac5851e32b9b23b5f9411a8c2bac4aae3ed4dd7b811dd1a72ea4aa71"
 
 	instantiateMsg := InstantiateMsg{
-		Admin:            "akash1admin123",
-		WormholeContract: "akash1wormhole456",
+		Admin:            "dicompute1admin123",
+		WormholeContract: "dicompute1wormhole456",
 		UpdateFee:        "1000000",
 		PriceFeedID:      "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d",
 		DataSources: []DataSource{
@@ -413,7 +413,7 @@ func (s *priceOracleContractTestSuite) TestPriceOracleWithVAAMessageEncoding() {
 	s.T().Logf("Pyth UpdatePriceFeed with VAA JSON: %s", string(data))
 
 	// Test UpdateConfig encoding
-	wormholeContract := "akash1newwormhole"
+	wormholeContract := "dicompute1newwormhole"
 	updateConfigMsg := ExecuteUpdateConfig{
 		UpdateConfig: UpdateConfigData{
 			WormholeContract: &wormholeContract,
@@ -459,8 +459,8 @@ func (s *priceOracleContractTestSuite) TestQueryOracleModuleParams() {
 func (s *priceOracleContractTestSuite) TestContractMessageEncoding() {
 	// Test InstantiateMsg encoding (now includes wormhole_contract and data_sources)
 	instantiateMsg := InstantiateMsg{
-		Admin:            "akash1test123",
-		WormholeContract: "akash1wormhole456",
+		Admin:            "dicompute1test123",
+		WormholeContract: "dicompute1wormhole456",
 		UpdateFee:        "1000",
 		PriceFeedID:      "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d",
 		DataSources: []DataSource{
@@ -519,8 +519,8 @@ func (s *priceOracleContractTestSuite) TestContractMessageEncoding() {
 func (s *priceOracleContractTestSuite) TestContractResponseParsing() {
 	// Test ConfigResponse parsing (now includes wormhole_contract and data_sources)
 	configJSON := `{
-		"admin": "akash1abc123",
-		"wormhole_contract": "akash1wormhole456",
+		"admin": "dicompute1abc123",
+		"wormhole_contract": "dicompute1wormhole456",
 		"update_fee": "1000",
 		"price_feed_id": "0xtest",
 		"default_denom": "uakt",
@@ -531,8 +531,8 @@ func (s *priceOracleContractTestSuite) TestContractResponseParsing() {
 	var config ConfigResponse
 	err := json.Unmarshal([]byte(configJSON), &config)
 	s.Require().NoError(err)
-	s.Require().Equal("akash1abc123", config.Admin)
-	s.Require().Equal("akash1wormhole456", config.WormholeContract)
+	s.Require().Equal("dicompute1abc123", config.Admin)
+	s.Require().Equal("dicompute1wormhole456", config.WormholeContract)
 	s.Require().Equal("1000", config.UpdateFee)
 	s.Require().Equal("0xtest", config.PriceFeedID)
 	s.Require().Equal("uakt", config.DefaultDenom)
@@ -726,7 +726,7 @@ func findWasmPath(contractDir, wasmFile string) string {
 	// Also try using GOPATH
 	gopath := os.Getenv("GOPATH")
 	if gopath != "" {
-		paths = append(paths, filepath.Join(gopath, "src/github.com/akash-network/node/contracts", contractDir, "artifacts", wasmFile))
+		paths = append(paths, filepath.Join(gopath, "src/github.com/dicompute-network/node/contracts", contractDir, "artifacts", wasmFile))
 	}
 
 	for _, p := range paths {
@@ -1131,7 +1131,7 @@ func (s *priceOracleContractTestSuite) TestStoreContractCodeViaGovernance() {
 	// The pyth contract requires:
 	// - wormhole_contract: Address for VAA verification (use placeholder for test)
 	// - data_sources: Trusted Pyth emitters
-	// - Queries oracle module params during instantiation via custom Akash querier
+	// - Queries oracle module params during instantiation via custom DICOMPUTE querier
 	initMsg := InstantiateMsg{
 		Admin:            val.Address.String(),
 		WormholeContract: val.Address.String(), // Use validator address as placeholder wormhole contract
@@ -1151,7 +1151,7 @@ func (s *priceOracleContractTestSuite) TestStoreContractCodeViaGovernance() {
 		val.Address.String(), // admin
 		val.Address,
 	)
-	s.Require().NoError(err, "Contract instantiation should succeed with custom Akash querier")
+	s.Require().NoError(err, "Contract instantiation should succeed with custom DICOMPUTE querier")
 	s.T().Logf("Contract instantiated at: %s", contractAddr)
 
 	// Step 8: Query the contract config to verify instantiation

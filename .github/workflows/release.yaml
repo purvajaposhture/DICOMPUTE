@@ -76,7 +76,7 @@ jobs:
         with:
           name: logs
           path: |
-            .cache/run/upgrade/validators/logs/.akash*.log
+            .cache/run/upgrade/validators/logs/.dicompute*.log
 
   notify-homebrew:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           token: ${{ secrets.GORELEASER_ACCESS_TOKEN }}
-          repo: akash-network/homebrew-tap
+          repo: dicompute-network/homebrew-tap
           ref: refs/heads/main
-          workflow: akash
+          workflow: dicompute
           inputs: '{"tag": "${{ env.RELEASE_TAG }}"}'
