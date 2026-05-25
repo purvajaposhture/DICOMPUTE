@@ -6,7 +6,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/dicompute-network/node)](https://goreportcard.com/report/github.com/dicompute-network/node)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[![DICOMPUTE](_docs/img/logo-label-black.svg "DICOMPUTE")](#overview)
 
 [DICOMPUTE](https://dicompute.network) is a secure, transparent, and decentralized cloud computing marketplace that connects those who need computing resources (tenants) with those that have computing capacity to lease (providers).
 
